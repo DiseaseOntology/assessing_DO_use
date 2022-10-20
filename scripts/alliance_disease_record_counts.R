@@ -3,7 +3,8 @@
 
 library(DO.utils)
 library(here)
-library(readr)
+library(tidyverse)
+library(hues)
 
 
 # SET file outputs --------------------------------------------------------
@@ -14,6 +15,7 @@ disobj_file <- file.path(data_dir, "disease_counts-disobj_by_obj.csv")
 disease_file <- file.path(data_dir, "disease_counts-disease_by_obj.csv")
 uniq_file <- file.path(data_dir, "disease_counts-unique_diseases.csv")
 
+plot_file <- here::here("graphics", "alliance_disobj_plot.tiff")
 
 
 # Ensure directory exists -------------------------------------------------
@@ -70,3 +72,51 @@ version_info <- disease_df %>%
   unlist() %>%
   paste0(names(.), ": ", .)
 readr::write_lines(version_info, file.path(data_dir, "version_info.txt"))
+
+
+
+# Plot - Disease-Object ---------------------------------------------------
+disobj_long <- disobj_record %>%
+  tidyr::pivot_longer(
+    cols = dplyr::ends_with("_n"),
+    names_to = c("Type", ".value"),
+    names_sep = "\\."
+  ) %>%
+  dplyr::mutate(
+    species = factor(
+      species,
+      levels = c("Saccharomyces cerevisiae", "Caenorhabditis elegans",
+                 "Drosophila melanogaster", "Danio rerio",
+                 "Mus musculus", "Rattus norvegicus", "Homo sapiens")
+      )
+  ) %>%
+  dplyr::rename(n = "disease-object_n", Species = species)
+
+colors <- hues::iwanthue(dplyr::n_distinct(disobj_long$Species))
+
+g <- ggplot(disobj_long, aes(x = Type, y = n, fill = Species)) +
+  geom_col() +
+  scale_fill_manual(values = colors) +
+  scale_y_continuous(
+    name = "Unique Disease-Object Relationships",
+    labels = ~ format(.x, big.mark = ",")
+  ) +
+  scale_x_discrete(name = "Object Type") +
+  theme_classic() +
+  theme(
+    axis.text.x = element_text(size = 11),
+    axis.text.y = element_text(size = 11),
+    legend.text = element_text(size = 11),
+    axis.title = element_text(size = 13),
+    legend.title = element_blank()
+  )
+
+ggsave(
+  plot = g,
+  filename = plot_file,
+  device = tools::file_ext(plot_file),
+  width = 5,
+  height = 3.75,
+  units = "in",
+  dpi = 600
+)
