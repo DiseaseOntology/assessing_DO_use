@@ -1,0 +1,2 @@
+Alliance_Database_Version: 5.2.2
+Date_file_generated_UTC: 2022-07-20 09:55

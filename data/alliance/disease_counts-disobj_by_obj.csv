@@ -1,0 +1,8 @@
+species,gene.disease-object_n,allele.disease-object_n,model.disease-object_n
+Caenorhabditis elegans,24382,232,146
+Danio rerio,45283,462,1357
+Drosophila melanogaster,22884,3336,0
+Homo sapiens,32325,0,0
+Mus musculus,35244,5707,6444
+Rattus norvegicus,34224,223,779
+Saccharomyces cerevisiae,8254,0,0
