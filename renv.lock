@@ -20,8 +20,8 @@
       "Package": "DO.utils",
       "Version": "0.2.0",
       "Source": "GitHub",
-      "Remotes": "allenbaron/rentrez",
       "RemoteType": "github",
+      "Remotes": "allenbaron/rentrez",
       "RemoteHost": "api.github.com",
       "RemoteRepo": "DO.utils",
       "RemoteUsername": "allenbaron",
@@ -441,6 +441,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "57557fac46471f0dbbf44705cc6a5c8c"
+    },
+    "hues": {
+      "Package": "hues",
+      "Version": "0.2.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "9d9a3cbcf39a3522f360980528b731fb"
     },
     "ids": {
       "Package": "ids",
