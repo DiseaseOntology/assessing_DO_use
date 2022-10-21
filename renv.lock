@@ -274,6 +274,13 @@
       "Repository": "CRAN",
       "Hash": "bb0eec2fe32e88d9e2836c2f73ea2077"
     },
+    "europepmc": {
+      "Package": "europepmc",
+      "Version": "0.4.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "7de048ca9ffe0677e3b0caec1c7f837f"
+    },
     "evaluate": {
       "Package": "evaluate",
       "Version": "0.17",
