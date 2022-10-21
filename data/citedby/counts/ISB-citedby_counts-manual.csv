@@ -55,3 +55,35 @@ internal_id,title,pmid,db,date,citedby_n
 2018_DMM_Bello,Disease Ontology: improving and unifying disease annotations across species,29590633,icite,2021-08-20,21
 2018_DMM_Bello,Disease Ontology: improving and unifying disease annotations across species,29590633,aminer,2021-08-20,29
 2018_DMM_Bello,Disease Ontology: improving and unifying disease annotations across species,29590633,semantic_scholar,2021-09-16,33
+2009_BIX_Du,From disease ontology to disease-ontology lite: statistical methods to adapt a general-purpose ontology for the test of gene-ontology associations,19478018,scopus,2022-10-21,87
+2009_BMCG_Osborne,Annotating the human genome with Disease Ontology,19594883,scopus,2022-10-21,192
+2012_NAR_Schriml,Disease Ontology: a backbone for disease semantic integration,22080554,scopus,2022-10-21,585
+2015_DB_Wu,Generating a focused view of disease ontology cancer terms for pan-cancer data integration and analysis,25841438,scopus,2022-10-21,26
+2015_MG_Schriml,The Disease Ontology: fostering interoperability between biological and clinical human disease-related data,26093607,scopus,2022-10-21,44
+2015_NAR_Kibbe,Disease Ontology 2015 update: an expanded and updated database of human diseases for linking biomedical knowledge through disease data,25348409,scopus,2022-10-21,409
+2018_DMM_Bello,Disease Ontology: improving and unifying disease annotations across species,29590633,scopus,2022-10-21,48
+2019_NAR_Schriml,"Human Disease Ontology 2018 update: classification, content and workflow expansion",30407550,scopus,2022-10-21,185
+2009_BIX_Du,From disease ontology to disease-ontology lite: statistical methods to adapt a general-purpose ontology for the test of gene-ontology associations,19478018,lens,2022-10-21,110
+2009_BMCG_Osborne,Annotating the human genome with Disease Ontology,19594883,lens,2022-10-21,251
+2012_NAR_Schriml,Disease Ontology: a backbone for disease semantic integration,22080554,lens,2022-10-21,720
+2015_DB_Wu,Generating a focused view of disease ontology cancer terms for pan-cancer data integration and analysis,25841438,lens,2022-10-21,38
+2015_MG_Schriml,The Disease Ontology: fostering interoperability between biological and clinical human disease-related data,26093607,lens,2022-10-21,57
+2015_NAR_Kibbe,Disease Ontology 2015 update: an expanded and updated database of human diseases for linking biomedical knowledge through disease data,25348409,lens,2022-10-21,490
+2018_DMM_Bello,Disease Ontology: improving and unifying disease annotations across species,29590633,lens,2022-10-21,54
+2019_NAR_Schriml,"Human Disease Ontology 2018 update: classification, content and workflow expansion",30407550,lens,2022-10-21,258
+2009_BIX_Du,From disease ontology to disease-ontology lite: statistical methods to adapt a general-purpose ontology for the test of gene-ontology associations,19478018,semantic_scholar,2022-10-21,116
+2009_BMCG_Osborne,Annotating the human genome with Disease Ontology,19594883,semantic_scholar,2022-10-21,270
+2012_NAR_Schriml,Disease Ontology: a backbone for disease semantic integration,22080554,semantic_scholar,2022-10-21,783
+2015_DB_Wu,Generating a focused view of disease ontology cancer terms for pan-cancer data integration and analysis,25841438,semantic_scholar,2022-10-21,36
+2015_MG_Schriml,The Disease Ontology: fostering interoperability between biological and clinical human disease-related data,26093607,semantic_scholar,2022-10-21,54
+2015_NAR_Kibbe,Disease Ontology 2015 update: an expanded and updated database of human diseases for linking biomedical knowledge through disease data,25348409,semantic_scholar,2022-10-21,505
+2018_DMM_Bello,Disease Ontology: improving and unifying disease annotations across species,29590633,semantic_scholar,2022-10-21,51
+2019_NAR_Schriml,"Human Disease Ontology 2018 update: classification, content and workflow expansion",30407550,semantic_scholar,2022-10-21,260
+2015_DB_Wu,Generating a focused view of disease ontology cancer terms for pan-cancer data integration and analysis,25841438,scite,2022-10-21,39
+2015_NAR_Kibbe,Disease Ontology 2015 update: an expanded and updated database of human diseases for linking biomedical knowledge through disease data,25348409,scite,2022-10-21,464
+2012_NAR_Schriml,Disease Ontology: a backbone for disease semantic integration,22080554,scite,2022-10-21,664
+2009_BIX_Du,From disease ontology to disease-ontology lite: statistical methods to adapt a general-purpose ontology for the test of gene-ontology associations,19478018,scite,2022-10-21,99
+2015_MG_Schriml,The Disease Ontology: fostering interoperability between biological and clinical human disease-related data,26093607,scite,2022-10-21,56
+2018_DMM_Bello,Disease Ontology: improving and unifying disease annotations across species,29590633,scite,2022-10-21,52
+2009_BMCG_Osborne,Annotating the human genome with Disease Ontology,19594883,scite,2022-10-21,221
+2019_NAR_Schriml,"Human Disease Ontology 2018 update: classification, content and workflow expansion",30407550,scite,2022-10-21,273
