@@ -9,7 +9,7 @@ library(lubridate)
 # SPECIFY file paths ------------------------------------------------------
 data_dir <- here::here("data/citedby/counts")
 manual_file <- file.path(data_dir, "ISB-citedby_counts-manual.csv")
-full_summary_file <- file.path(data_dir, "ISB-citedby_counts_smry-manual.csv")
+full_summary_file <- file.path(data_dir, "ISB-citedby_counts-manual_smry.csv")
 
 plot_2021 <- here::here("graphics/citedby_total_2021.tiff")
 plot_2022 <- here::here("graphics/citedby_total_2022.tiff")
@@ -42,7 +42,8 @@ cb_summary_2022 <- dplyr::filter(cb_summary, lubridate::year(date) == 2022)
 # Plot by year ------------------------------------------------------------
 db_lvl <- c(pubmed = "PubMed", scopus = "Scopus", europepmc = "Europe PMC",
         icite = "iCite", semantic_scholar = "Semantic Scholar",
-        scite = "scite.ai", aminer = "AMiner", lens = "Lens.org")
+        scite = "scite.ai", aminer = "AMiner", lens = "Lens.org",
+        google_scholar = "Google Scholar")
 
 g_2021 <- cb_summary_2021 %>%
     dplyr::mutate(db = factor(dplyr::recode(db, !!!db_lvl), levels = db_lvl)) %>%
@@ -83,8 +84,8 @@ ggsave(
   g_2022,
   filename = plot_2022,
   device = tools::file_ext(plot_2022),
-  width = 1.75,
-  height = 3.08,
+  width = 2,
+  height = 3.45,
   dpi = 600,
   compression = "zip"
 )

@@ -87,3 +87,11 @@ internal_id,title,pmid,db,date,citedby_n
 2018_DMM_Bello,Disease Ontology: improving and unifying disease annotations across species,29590633,scite,2022-10-21,52
 2009_BMCG_Osborne,Annotating the human genome with Disease Ontology,19594883,scite,2022-10-21,221
 2019_NAR_Schriml,"Human Disease Ontology 2018 update: classification, content and workflow expansion",30407550,scite,2022-10-21,273
+2015_DB_Wu,Generating a focused view of disease ontology cancer terms for pan-cancer data integration and analysis,25841438,google_scholar,2022-10-25,45
+2015_MG_Schriml,The Disease Ontology: fostering interoperability between biological and clinical human disease-related data,26093607,google_scholar,2022-10-25,64
+2009_BMCG_Osborne,Annotating the human genome with Disease Ontology,19594883,google_scholar,2022-10-25,291
+2018_DMM_Bello,Disease Ontology: improving and unifying disease annotations across species,29590633,google_scholar,2022-10-25,63
+2009_BIX_Du,From disease ontology to disease-ontology lite: statistical methods to adapt a general-purpose ontology for the test of gene-ontology associations,19478018,google_scholar,2022-10-25,130
+2019_NAR_Schriml,"Human Disease Ontology 2018 update: classification, content and workflow expansion",30407550,google_scholar,2022-10-25,304
+2015_NAR_Kibbe,Disease Ontology 2015 update: an expanded and updated database of human diseases for linking biomedical knowledge through disease data,25348409,google_scholar,2022-10-25,566
+2012_NAR_Schriml,Disease Ontology: a backbone for disease semantic integration,22080554,google_scholar,2022-10-25,910
