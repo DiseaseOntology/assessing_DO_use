@@ -1,4 +1,5 @@
-# DO search results
+# Conducts literature searches for papers referring to the Human Disease
+# Ontology by one of various identifiers.
 
 # Setup -------------------------------------------------------------------
 
@@ -8,20 +9,11 @@ library(europepmc)
 library(rentrez)
 library(DO.utils)
 
-# make functions safe --> to keep code running if errors
-search_pm_safely <- purrr::safely(DO.utils::search_pubmed)
-search_pmc_safely <- purrr::safely(DO.utils::search_pmc)
-search_epmc_safely <- purrr::safely(europepmc::epmc_search)
 
+# Define Output Location & Searches ---------------------------------------
+data_dir <- here::here("data/lit_search")
 
-# Define Searches & Output Location ---------------------------------------
-
-outdir <- "data/lit_search"
-if (!dir.exists(outdir)) {
-  dir.create(outdir, recursive = TRUE)
-}
-
-search_terms <- list(
+search_terms <- c(
   ns_id = 'doid',
   full_name = '"human disease ontology"',
   generic_name = '"disease ontology"',
@@ -39,44 +31,41 @@ search_terms <- list(
 )
 
 
-# Explore Europe PMC hit counts (+/- synonyms) ----------------------------
+
+# Support -----------------------------------------------------------------
+if (!dir.exists(data_dir)) {
+  dir.create(data_dir, recursive = TRUE)
+}
+
+# make functions safe --> to keep code running if errors
+search_pm_safely <- purrr::safely(DO.utils::search_pubmed)
+search_pmc_safely <- purrr::safely(DO.utils::search_pmc)
+search_epmc_safely <- purrr::safely(europepmc::epmc_search)
 
 search_blank <- tibble::tibble(
   name = names(search_terms),
   term = search_terms
 )
 
+
+# Explore Europe PMC hit counts (+/- synonyms) ----------------------------
 epmc_n <- search_blank %>%
   dplyr::mutate(
-    w_synonym = purrr::map_dbl(
-      term,
-      ~ europepmc::epmc_hits(.x, synonym = TRUE)
-    ),
-    wo_synonym = purrr::map_dbl(
+    hits_no_synonym = purrr::map_dbl(
       term,
       ~ europepmc::epmc_hits(.x, synonym = FALSE)
     )
   )
 
-# NOTE: europepmc::epmc_hits doesn't accept synonym, despite what documentation
-#   suggests.
+# NOTE: europepmc::epmc_hits() doesn't use synonyms, despite what documentation
+#   says. epmc_search() does and has ~ 11 more hits for `ns_id` search on
+#   2022-10-22. It's sort of surprising that any of these searches would have
+#   'synonyms'... not sure what they are or where they are from.
 
 
 # GET Europe PMC search results -------------------------------------------
-
-# without synonyms
+# Using with synonyms to match web results
 epmc_res <- purrr::map(
-  search_terms,
-  ~ search_epmc_safely(.x, limit = 10000, synonym = FALSE)
-) %>%
-  purrr::set_names(names(search_terms)) %>%
-  purrr::transpose() %>%
-  purrr::simplify_all()
-
-epmc_df <- dplyr::bind_rows(epmc_res$result, .id = "search_id")
-
-# with synonyms -> on 2021-08-23 10 more results with ns_id  ("doid")
-epmc_syn_res <- purrr::map(
   search_terms,
   ~ search_epmc_safely(.x, limit = 10000, synonym = TRUE)
 ) %>%
@@ -84,17 +73,14 @@ epmc_syn_res <- purrr::map(
   purrr::transpose() %>%
   purrr::simplify_all()
 
-epmc_syn_df <- dplyr::bind_rows(epmc_syn_res$result, .id = "search_id")
-
-epmc_diff <- dplyr::anti_join(epmc_syn_df, epmc_df)
+epmc_df <- dplyr::bind_rows(epmc_res$result, .id = "search_id")
 
 # save results
-save(epmc_res, epmc_syn_res, file = here::here(outdir, "epmc_res.RData"))
-readr::write_csv(epmc_syn_df, here::here(outdir, "epmc_with_synonym-mult.csv"))
+save(epmc_res, file = file.path(data_dir, "epmc_search_raw.RData"))
+readr::write_csv(epmc_df, file.path(data_dir, "epmc_search_results.csv"))
 
 
 # GET PubMed search results -----------------------------------------------
-
 # pubmed splits URLs replacing / with AND (probably close to the same in essence)
 pm_res <- purrr::map(
   search_terms,
@@ -114,12 +100,11 @@ pm_df <- pm_res$result %>%
   dplyr::mutate(search_id = stringr::str_remove(search_id, "[0-9]+$"))
 
 # save results
-save(pm_res, file = here::here(outdir, "pubmed.RData"))
-readr::write_csv(pm_df, here::here(outdir, "pubmed-mult.csv"))
+save(pm_res, file = file.path(data_dir, "pubmed_search_raw.RData"))
+readr::write_csv(pm_df, file.path(data_dir, "pubmed_search_results.csv"))
 
 
 # GET PMC search results --------------------------------------------------
-
 pmc_res <- purrr::map(
   search_terms,
   ~ search_pmc_safely(.x, retmax = 10000, pmid = TRUE)
@@ -138,7 +123,7 @@ pmc_df <- purrr::map2_dfr(
       } else {
         tibble::tibble(
           pmcid = res$ids,
-          pmid = as.numeric(DO.utils::extract_pmid(res)),
+          pmid = as.numeric(suppressWarnings(DO.utils::extract_pmid(res))),
           search_id = nm
         )
       }
@@ -147,12 +132,11 @@ pmc_df <- purrr::map2_dfr(
   dplyr::select(search_id, pmid, pmcid)
 
 # save results
-save(pmc_res, file = here::here(outdir, "pmc.RData"))
-readr::write_csv(pmc_df, here::here(outdir, "pmc-mult.csv"))
+save(pmc_res, file = file.path(data_dir, "pmc_search_raw.RData"))
+readr::write_csv(pmc_df, file.path(data_dir, "pmc_search_results.csv"))
 
 
 # Count Results -----------------------------------------------------------
-
 search_n <- dplyr::bind_rows(
   pm = dplyr::count(pm_df, search_id),
   pmc = dplyr::count(pmc_df, search_id),
@@ -162,13 +146,17 @@ search_n <- dplyr::bind_rows(
   tidyr::pivot_wider(
     names_from = db,
     values_from = n
-  )
+  ) %>%
+  dplyr::left_join(search_blank, by = c("search_id" = "name"))
 
-readr::write_csv(search_n, here::here(outdir, "search_res_n.csv"), na = "0")
+readr::write_csv(search_n, file.path(data_dir, "search_res_n.csv"), na = "0")
 
 
-# FYI ---------------------------------------------------------------------
+# Identify overlap in searches --------------------------------------------
+epmc_pm_match <- DO.utils::match_citations(epmc_df, pm_df)
+epmc_pmc_match <- DO.utils::match_citations(epmc_df, pmc_df)
 
+# Actual searches performed -----------------------------------------------
 actual_search <- tibble::tibble(
   search_id = names(search_terms),
   search_term = unlist(search_terms),
@@ -176,4 +164,4 @@ actual_search <- tibble::tibble(
   pmc = purrr::map_chr(pmc_res$result, ~.x$QueryTranslation)
 )
 
-readr::write_csv(actual_search, here::here(outdir, "actual_search_term.csv"))
+readr::write_csv(actual_search, file.path(data_dir, "actual_search_terms.csv"))
