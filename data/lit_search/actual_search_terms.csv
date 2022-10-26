@@ -1,0 +1,15 @@
+search_id,search_term,pm,pmc
+ns_id,doid,doid[All Fields],doid[All Fields]
+full_name,"""human disease ontology""","""human disease ontology""[All Fields]","""human disease ontology""[All Fields]"
+generic_name,"""disease ontology""","""disease ontology""[All Fields]","""disease ontology""[All Fields]"
+lynn_custom,"""disease ontology"" NOT IDO","""disease ontology""[All Fields] NOT IDO[All Fields]","""disease ontology""[All Fields] NOT IDO[All Fields]"
+website,"""disease-ontology.org""","""disease-ontology.org""[All Fields]","""disease-ontology.org""[All Fields]"
+ncbo,bioportal.bioontology.org/ontologies/doid,bioportal.bioontology.org[All Fields] AND ontologies[All Fields] AND doid[All Fields],bioportal.bioontology.org[All Fields] AND ontologies[All Fields] AND doid[All Fields]
+embl_ols,ebi.ac.uk/ols/ontologies/doid,ebi.ac.uk/ols[All Fields] AND ontologies[All Fields] AND doid[All Fields],ebi.ac.uk/ols[All Fields] AND ontologies[All Fields] AND doid[All Fields]
+iri,purl.obolibrary.org/obo/doid.owl,obo[All Fields],obo[All Fields] AND doid.owl[All Fields]
+iri_no_ext,purl.obolibrary.org/obo/doid,obo[All Fields] AND doid[All Fields],obo[All Fields] AND doid[All Fields]
+ontobee,ontobee.org/ontology/doid,ontobee.org[All Fields] AND ontology[All Fields] AND doid[All Fields],ontology[All Fields] AND doid[All Fields]
+github,github.com/diseaseontology/humandiseaseontology,github.com[All Fields] AND diseaseontology[All Fields],github.com[All Fields] AND diseaseontology[All Fields] AND humandiseaseontology[All Fields]
+do_wiki,do-wiki.nubic.northwestern.edu/do-wiki/index.php/main_page,index.php/main_page[All Fields],wiki[All Fields] AND index.php[All Fields] AND main_page[All Fields]
+sourceforge,sourceforge.net/p/diseaseontology,sourceforge.net[All Fields] AND p[All Fields] AND diseaseontology[All Fields],sourceforge.net[All Fields] AND p[All Fields] AND diseaseontology[All Fields]
+wikipedia,en.wikipedia.org/wiki/disease_ontology,wiki[All Fields] AND disease_ontology[All Fields],en.wikipedia.org/wiki[All Fields] AND disease_ontology[All Fields]

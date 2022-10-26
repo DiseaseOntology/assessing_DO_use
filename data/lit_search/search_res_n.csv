@@ -1,0 +1,15 @@
+search_id,pm,pmc,epmc,term
+do_wiki,6,0,1,do-wiki.nubic.northwestern.edu/do-wiki/index.php/main_page
+full_name,16,351,258,"""human disease ontology"""
+generic_name,253,2291,2107,"""disease ontology"""
+iri,406,2,3,purl.obolibrary.org/obo/doid.owl
+lynn_custom,244,2223,2033,"""disease ontology"" NOT IDO"
+ns_id,6,425,643,doid
+website,7,8,114,"""disease-ontology.org"""
+wikipedia,1,0,1,en.wikipedia.org/wiki/disease_ontology
+iri_no_ext,0,106,19,purl.obolibrary.org/obo/doid
+ontobee,0,355,0,ontobee.org/ontology/doid
+embl_ols,0,0,2,ebi.ac.uk/ols/ontologies/doid
+github,0,0,6,github.com/diseaseontology/humandiseaseontology
+ncbo,0,0,34,bioportal.bioontology.org/ontologies/doid
+sourceforge,0,0,2,sourceforge.net/p/diseaseontology
