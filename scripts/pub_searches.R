@@ -111,6 +111,8 @@ if (!file.exists(pm_df_file)) {
 
 # GET PMC search results --------------------------------------------------
 pmc_raw_file <- file.path(data_dir, "pmc_search_raw.RData")
+pmc_id_raw_file <- file.path(data_dir, "pmc_search_raw-IDs.RData")
+
 pmc_df_file <- file.path(data_dir, "pmc_search_results.csv")
 
 if (!file.exists(pmc_raw_file)) {
@@ -127,6 +129,22 @@ if (!file.exists(pmc_raw_file)) {
   load(pmc_raw_file)
 }
 
+# Get PubMed IDs for matching -- search results have PMIDs but they are not
+# ordered to match the PMCIDs and must be obtained separately.
+if (!file.exists(pmc_id_raw_file)) {
+  pmc_uniq <- purrr::map(pmc_res$result, ~ .x$ids) %>%
+    unlist() %>%
+    unique()
+
+  pmc_id2 <- DO.utils::batch_id_converter(pmc_uniq, type = "pmcid") %>%
+    tibble::as_tibble()
+
+  save(pmc_id2, file = pmc_id_raw_file)
+} else {
+  load(pmc_id_raw_file)
+}
+
+
 if (!file.exists(pmc_df_file)) {
   pmc_df <- purrr::map2_dfr(
     .x = pmc_res$result,
@@ -137,13 +155,13 @@ if (!file.exists(pmc_df_file)) {
         } else {
           tibble::tibble(
             pmcid = res$ids,
-            pmid = as.numeric(suppressWarnings(DO.utils::extract_pmid(res))),
             search_id = nm
           )
         }
     }
   ) %>%
-    dplyr::select(search_id, pmid, pmcid)
+    dplyr::left_join(dplyr::select(pmc_id2, -versions), by = "pmcid") %>%
+    dplyr::select(search_id, pmid, pmcid, doi)
 
   readr::write_csv(pmc_df, pmc_df_file)
 } else {
