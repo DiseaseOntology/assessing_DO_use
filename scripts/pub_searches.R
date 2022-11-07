@@ -8,10 +8,12 @@ library(tidyverse)
 library(europepmc)
 library(rentrez)
 library(DO.utils)
+library(ggupset)
 
 
 # Define Output Location & Searches ---------------------------------------
 data_dir <- here::here("data/lit_search")
+graphics_dir <- here::here("graphics/lit_search")
 
 search_terms <- c(
   ns_id = 'doid',
@@ -35,6 +37,10 @@ search_terms <- c(
 # Support -----------------------------------------------------------------
 if (!dir.exists(data_dir)) {
   dir.create(data_dir, recursive = TRUE)
+}
+
+if (!dir.exists(graphics_dir)) {
+  dir.create(graphics_dir, recursive = TRUE)
 }
 
 # make functions safe --> to keep code running if errors
@@ -168,6 +174,7 @@ if (!file.exists(pmc_df_file)) {
   pmc_df <- readr::read_csv(pmc_df_file)
 }
 
+
 # Count Results -----------------------------------------------------------
 search_n <- dplyr::bind_rows(
   pm = dplyr::count(pm_df, search_id),
@@ -197,3 +204,98 @@ actual_search <- tibble::tibble(
 )
 
 readr::write_csv(actual_search, file.path(data_dir, "actual_search_terms.csv"))
+
+
+# Identify overlap in searches --------------------------------------------
+plot_upset <- function(df, id_col, overlap_col, min_count = 0, ...) {
+  overlap_df <- df %>%
+    dplyr::select({{ overlap_col }}, {{ id_col }}) %>%
+    dplyr::group_by({{ id_col }}) %>%
+    dplyr::summarize(
+      {{ overlap_col }} := list({{ overlap_col }}),
+      str = paste({{ overlap_col }}, collapse = "|")
+    ) %>%
+    dplyr::ungroup() %>%
+    dplyr::add_count(str, name = "n")
+
+  # drop intersections if < 10
+  overlap_df <- overlap_df %>%
+    dplyr::filter(n >= min_count)
+
+  g <- ggplot(overlap_df, aes(x = {{ overlap_col }})) +
+    geom_bar() +
+    scale_x_upset() +
+    labs(...)
+
+  g
+}
+
+# excluding results where actual search tokens were converted to non-DO identifiers
+epmc_plot_df <- epmc_df %>%
+  dplyr::mutate(search_id = dplyr::recode(search_id, !!!search_terms))
+
+g_epmc <- plot_upset(
+  epmc_plot_df,
+  id,
+  search_id,
+  x = "Search",
+  y = "Hits"
+)
+
+g_epmc10 <- plot_upset(
+  epmc_plot_df,
+  id,
+  search_id,
+  min_count = 10,
+  x = "Search",
+  y = "Hits"
+)
+
+g_pmc <- pmc_df %>%
+  dplyr::filter(search_id != "do_wiki") %>%
+  dplyr::mutate(search_id = dplyr::recode(search_id, !!!search_terms)) %>%
+  plot_upset(
+    pmcid,
+    search_id,
+    x = "Search",
+    y = "Hits"
+  )
+
+g_pm <- pm_df %>%
+  dplyr::filter(!search_id %in% c("iri", "do_wiki")) %>%
+  dplyr::mutate(search_id = dplyr::recode(search_id, !!!search_terms)) %>%
+  plot_upset(
+    pmid,
+    search_id,
+    x = "Search",
+    y = "Hits"
+  )
+
+
+# save plots
+ggsave(
+  filename = file.path(graphics_dir, "epmc_search_overlap.tiff"),
+  plot = g_epmc,
+  device = "tiff",
+  width = 12
+)
+
+ggsave(
+  filename = file.path(graphics_dir, "epmc_search_overlap-min10.tiff"),
+  plot = g_epmc10,
+  device = "tiff",
+  width = 6,
+  height = 3
+)
+
+ggsave(
+  filename = file.path(graphics_dir, "pmc_search_overlap.tiff"),
+  plot = g_pmc,
+  device = "tiff"
+)
+
+ggsave(
+  filename = file.path(graphics_dir, "pm_search_overlap.tiff"),
+  plot = g_pm,
+  device = "tiff"
+)
