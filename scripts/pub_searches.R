@@ -49,77 +49,107 @@ search_blank <- tibble::tibble(
 
 
 # GET Europe PMC search results -------------------------------------------
-# Using with synonyms to match web results
-epmc_res <- purrr::map(
-  search_terms,
-  ~ search_epmc_safely(.x, limit = 10000, synonym = TRUE)
-) %>%
-  purrr::set_names(names(search_terms)) %>%
-  purrr::transpose() %>%
-  purrr::simplify_all()
+epmc_raw_file <- file.path(data_dir, "epmc_search_raw.RData")
+epmc_df_file <- file.path(data_dir, "epmc_search_results.csv")
 
-epmc_df <- dplyr::bind_rows(epmc_res$result, .id = "search_id")
+if (!file.exists(epmc_raw_file)) {
+  # Using with synonyms to match web results
+  epmc_res <- purrr::map(
+    search_terms,
+    ~ search_epmc_safely(.x, limit = 10000, synonym = TRUE)
+  ) %>%
+    purrr::set_names(names(search_terms)) %>%
+    purrr::transpose() %>%
+    purrr::simplify_all()
 
-# save results
-save(epmc_res, file = file.path(data_dir, "epmc_search_raw.RData"))
-readr::write_csv(epmc_df, file.path(data_dir, "epmc_search_results.csv"))
+  save(epmc_res, file = epmc_raw_file)
+} else {
+  load(epmc_raw_file)
+}
+
+if (!file.exists(epmc_df_file)) {
+  epmc_df <- dplyr::bind_rows(epmc_res$result, .id = "search_id")
+  readr::write_csv(epmc_df, epmc_df_file)
+} else {
+  epmc_df <- readr::read_csv(epmc_df_file)
+}
 
 
 # GET PubMed search results -----------------------------------------------
-# pubmed splits URLs replacing / with AND (probably close to the same in essence)
-pm_res <- purrr::map(
-  search_terms,
-  ~ search_pm_safely(.x, retmax = 10000)
-) %>%
-  purrr::set_names(names(search_terms)) %>%
-  purrr::transpose() %>%
-  purrr::simplify_all()
+pm_raw_file <- file.path(data_dir, "pubmed_search_raw.RData")
+pm_df_file <- file.path(data_dir, "pubmed_search_results.csv")
 
-pm_df <- pm_res$result %>%
-  purrr::map(DO.utils::extract_pmid) %>%
-  unlist() %>%
-  tibble::tibble(
-    search_id = names(.),
-    pmid = .
+if (!file.exists(pm_raw_file)) {
+  # pubmed splits URLs replacing / with AND (probably close to the same in essence)
+  pm_res <- purrr::map(
+    search_terms,
+    ~ search_pm_safely(.x, retmax = 10000)
   ) %>%
-  dplyr::mutate(search_id = stringr::str_remove(search_id, "[0-9]+$"))
+    purrr::set_names(names(search_terms)) %>%
+    purrr::transpose() %>%
+    purrr::simplify_all()
 
-# save results
-save(pm_res, file = file.path(data_dir, "pubmed_search_raw.RData"))
-readr::write_csv(pm_df, file.path(data_dir, "pubmed_search_results.csv"))
+  save(pm_res, file = pm_raw_file)
+} else {
+  load(pm_raw_file)
+}
+
+if (!file.exists(pm_df_file)) {
+  pm_df <- pm_res$result %>%
+    purrr::map(DO.utils::extract_pmid) %>%
+    unlist() %>%
+    tibble::tibble(
+      search_id = names(.),
+      pmid = .
+    ) %>%
+    dplyr::mutate(search_id = stringr::str_remove(search_id, "[0-9]+$"))
+  readr::write_csv(pm_df, pm_df_file)
+} else {
+  pm_df <- readr::read_csv(pm_df_file)
+}
 
 
 # GET PMC search results --------------------------------------------------
-pmc_res <- purrr::map(
-  search_terms,
-  ~ search_pmc_safely(.x, retmax = 10000, pmid = TRUE)
-) %>%
-  purrr::set_names(names(search_terms)) %>%
-  purrr::transpose() %>%
-  purrr::simplify_all()
+pmc_raw_file <- file.path(data_dir, "pmc_search_raw.RData")
+pmc_df_file <- file.path(data_dir, "pmc_search_results.csv")
 
-pmc_df <- purrr::map2_dfr(
-  .x = pmc_res$result,
-  .y = names(pmc_res$result),
-  function(res, nm) {
-    missing_val <-
-      if (rlang::is_empty(res$ids)) {
-        NULL
-      } else {
-        tibble::tibble(
-          pmcid = res$ids,
-          pmid = as.numeric(suppressWarnings(DO.utils::extract_pmid(res))),
-          search_id = nm
-        )
-      }
-  }
-) %>%
-  dplyr::select(search_id, pmid, pmcid)
+if (!file.exists(pmc_raw_file)) {
+  pmc_res <- purrr::map(
+    search_terms,
+    ~ search_pmc_safely(.x, retmax = 10000, pmid = TRUE)
+  ) %>%
+    purrr::set_names(names(search_terms)) %>%
+    purrr::transpose() %>%
+    purrr::simplify_all()
 
-# save results
-save(pmc_res, file = file.path(data_dir, "pmc_search_raw.RData"))
-readr::write_csv(pmc_df, file.path(data_dir, "pmc_search_results.csv"))
+  save(pmc_res, file = pmc_raw_file)
+} else {
+  load(pmc_raw_file)
+}
 
+if (!file.exists(pmc_df_file)) {
+  pmc_df <- purrr::map2_dfr(
+    .x = pmc_res$result,
+    .y = names(pmc_res$result),
+    function(res, nm) {
+      missing_val <-
+        if (rlang::is_empty(res$ids)) {
+          NULL
+        } else {
+          tibble::tibble(
+            pmcid = res$ids,
+            pmid = as.numeric(suppressWarnings(DO.utils::extract_pmid(res))),
+            search_id = nm
+          )
+        }
+    }
+  ) %>%
+    dplyr::select(search_id, pmid, pmcid)
+
+  readr::write_csv(pmc_df, pmc_df_file)
+} else {
+  pmc_df <- readr::read_csv(pmc_df_file)
+}
 
 # Count Results -----------------------------------------------------------
 search_n <- dplyr::bind_rows(
