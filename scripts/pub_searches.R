@@ -132,7 +132,6 @@ if (!file.exists(pmc_df_file)) {
     .x = pmc_res$result,
     .y = names(pmc_res$result),
     function(res, nm) {
-      missing_val <-
         if (rlang::is_empty(res$ids)) {
           NULL
         } else {
