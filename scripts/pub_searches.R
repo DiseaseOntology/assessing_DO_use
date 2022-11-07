@@ -48,21 +48,6 @@ search_blank <- tibble::tibble(
 )
 
 
-# Explore Europe PMC hit counts (+/- synonyms) ----------------------------
-epmc_n <- search_blank %>%
-  dplyr::mutate(
-    hits_no_synonym = purrr::map_dbl(
-      term,
-      ~ europepmc::epmc_hits(.x, synonym = FALSE)
-    )
-  )
-
-# NOTE: europepmc::epmc_hits() doesn't use synonyms, despite what documentation
-#   says. epmc_search() does and has ~ 11 more hits for `ns_id` search on
-#   2022-10-22. It's sort of surprising that any of these searches would have
-#   'synonyms'... not sure what they are or where they are from.
-
-
 # GET Europe PMC search results -------------------------------------------
 # Using with synonyms to match web results
 epmc_res <- purrr::map(
