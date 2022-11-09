@@ -15,7 +15,8 @@ disobj_file <- file.path(data_dir, "disease_counts-disobj_by_obj.csv")
 disease_file <- file.path(data_dir, "disease_counts-disease_by_obj.csv")
 uniq_file <- file.path(data_dir, "disease_counts-unique_diseases.csv")
 
-plot_file <- here::here("graphics", "alliance_disobj_plot.png")
+plot_disobj_file <- here::here("graphics", "alliance_disobj_plot.png")
+plot_full_file <- here::here("graphics", "alliance_full_record_plot.png")
 
 
 # Ensure directory exists -------------------------------------------------
@@ -75,7 +76,12 @@ readr::write_lines(version_info, file.path(data_dir, "version_info.txt"))
 
 
 
-# Plot - Disease-Object ---------------------------------------------------
+
+# Plots -------------------------------------------------------------------
+
+colors <- hues::iwanthue(dplyr::n_distinct(disease_df$SpeciesName))
+
+# Unique Disease-Object Records
 disobj_long <- disobj_record %>%
   tidyr::pivot_longer(
     cols = dplyr::ends_with("_n"),
@@ -92,14 +98,12 @@ disobj_long <- disobj_record %>%
   ) %>%
   dplyr::rename(n = "disease-object_n", Species = species)
 
-colors <- hues::iwanthue(dplyr::n_distinct(disobj_long$Species))
-
-g <- ggplot(disobj_long, aes(x = Type, y = n, fill = Species)) +
+g_disobj <- ggplot(disobj_long, aes(x = Type, y = n, fill = Species)) +
   geom_col() +
   scale_fill_manual(values = colors) +
   scale_y_continuous(
     name = "Unique Disease-Object Relationships",
-    labels = ~ format(.x, big.mark = ",")
+    labels = scales::comma
   ) +
   scale_x_discrete(name = "Object Type") +
   theme_classic() +
@@ -112,9 +116,55 @@ g <- ggplot(disobj_long, aes(x = Type, y = n, fill = Species)) +
   )
 
 ggsave(
-  plot = g,
-  filename = plot_file,
-  device = tools::file_ext(plot_file),
+  plot = g_disobj,
+  filename = plot_disobj_file,
+  device = tools::file_ext(plot_disobj_file),
+  width = 5,
+  height = 3.75,
+  units = "in",
+  dpi = 600
+)
+
+
+# Full Disease Records
+full_long <- full_record %>%
+  tidyr::pivot_longer(
+    cols = dplyr::ends_with("_n"),
+    names_to = c("Type", ".value"),
+    names_sep = "\\."
+  ) %>%
+  dplyr::mutate(
+    species = factor(
+      species,
+      levels = c("Saccharomyces cerevisiae", "Caenorhabditis elegans",
+                 "Drosophila melanogaster", "Danio rerio",
+                 "Mus musculus", "Rattus norvegicus", "Homo sapiens")
+    )
+  ) %>%
+  dplyr::rename(n = "full_record_n", Species = species)
+
+
+g_full <- ggplot(full_long, aes(x = Type, y = n, fill = Species)) +
+  geom_col() +
+  scale_fill_manual(values = colors) +
+  scale_y_continuous(
+    name = "Total Disease Records",
+    labels = scales::comma
+  ) +
+  scale_x_discrete(name = "Object Type") +
+  theme_classic() +
+  theme(
+    axis.text.x = element_text(size = 11),
+    axis.text.y = element_text(size = 11),
+    legend.text = element_text(size = 11),
+    axis.title = element_text(size = 13),
+    legend.title = element_blank()
+  )
+
+ggsave(
+  plot = g_full,
+  filename = plot_full_file,
+  device = tools::file_ext(plot_full_file),
   width = 5,
   height = 3.75,
   units = "in",
