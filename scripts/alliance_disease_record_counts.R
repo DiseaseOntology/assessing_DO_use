@@ -149,7 +149,7 @@ g_full <- ggplot(full_long, aes(x = Type, y = n, fill = Species)) +
   scale_fill_manual(values = colors) +
   scale_y_continuous(
     name = "Total Disease Records",
-    labels = scales::comma
+    labels = scales::label_comma()
   ) +
   scale_x_discrete(name = "Object Type") +
   theme_classic() +
