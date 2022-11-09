@@ -83,6 +83,8 @@ if (!file.exists(epmc_df_file)) {
 
 # GET PubMed search results -----------------------------------------------
 pm_raw_file <- file.path(data_dir, "pubmed_search_raw.RData")
+pm_id_raw_file <- file.path(data_dir, "pm_search_raw-IDs.RData")
+
 pm_df_file <- file.path(data_dir, "pubmed_search_results.csv")
 
 if (!file.exists(pm_raw_file)) {
@@ -100,6 +102,20 @@ if (!file.exists(pm_raw_file)) {
   load(pm_raw_file)
 }
 
+# Get more IDs for matching
+if (!file.exists(pm_id_raw_file)) {
+  pm_uniq <- purrr::map(pm_res$result, DO.utils::extract_pmid) %>%
+    unlist() %>%
+    unique()
+
+  pm_id2 <- DO.utils::batch_id_converter(pm_uniq) %>%
+    tibble::as_tibble()
+
+  save(pm_id2, file = pm_id_raw_file)
+} else {
+  load(pm_id_raw_file)
+}
+
 if (!file.exists(pm_df_file)) {
   pm_df <- pm_res$result %>%
     purrr::map(DO.utils::extract_pmid) %>%
@@ -108,7 +124,9 @@ if (!file.exists(pm_df_file)) {
       search_id = names(.),
       pmid = .
     ) %>%
-    dplyr::mutate(search_id = stringr::str_remove(search_id, "[0-9]+$"))
+    dplyr::mutate(search_id = stringr::str_remove(search_id, "[0-9]+$")) %>%
+    dplyr::left_join(dplyr::select(pm_id2, pmcid:doi), by = "pmid")
+
   readr::write_csv(pm_df, pm_df_file)
 } else {
   pm_df <- readr::read_csv(pm_df_file)
