@@ -413,3 +413,65 @@ ggsave(
   device = "png",
   dpi = 600
 )
+
+
+# Plot unique results for DOID & "disease ontology" -----------------------
+
+all_search <- dplyr::bind_rows(epmc_df, pmc_df, pm_df, .id = "src") %>%
+  dplyr::filter(search_id %in% best_search) %>%
+  dplyr::mutate(
+    src = dplyr::recode(
+      src,
+      "1" = "Europe PMC",
+      "2" = "PubMed Central",
+      "3" = "PubMed"
+    ),
+    src = factor(src, levels = c("PubMed", "PubMed Central", "Europe PMC")),
+    search_id = dplyr::recode(search_id, !!!search_terms),
+    search_id = factor(
+      search_id,
+      levels = c("doid", "\"disease-ontology.org\"", "\"disease ontology\"")
+    )
+  )
+
+g_total <- ggplot(all_search, aes(x = src)) +
+  geom_bar(
+    aes(fill = search_id), width = 0.8,
+    size = 0.2, color = "black"
+  ) +
+  scale_fill_manual(
+    name = "Search",
+    values = c("#e8cb3e", "#9e79f3", "#f54b65")
+  ) +
+  geom_text(aes(x = src, y = 350, label = src), angle = 90, hjust = 0) +
+  labs(x = "Database", y = "Search Hits") +
+  scale_y_continuous(expand = expansion(mult = 0.01)) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_blank(),
+    legend.text = element_text(size = 10, color = "black")
+  )
+
+# save without legend (to get right size)
+ggsave(
+  g_total + theme(legend.position = "none"),
+  filename = file.path(graphics_dir, "total_hits-graph.png"),
+  device = "png",
+  dpi = 300, width = 1.47, height = 3.35
+)
+# save only for legend (crop)
+ggsave(
+  # may not like left position (also printed without guides adjustment)
+  g_total + guides(fill = guide_legend(title.position = "left")),
+  filename = file.path(graphics_dir, "total_hits-legend.png"),
+  device = "png",
+  dpi = 300, width = 3, height = 3.35
+)
+# save complete
+ggsave(
+  # may not like left position (also printed without guides adjustment)
+  g_total + guides(fill = guide_legend(title.position = "top")),
+  filename = file.path(graphics_dir, "total_hits-complete.png"),
+  device = "png",
+  dpi = 300, width = 3.5, height = 3.35
+)
