@@ -291,33 +291,33 @@ g_pm <- pm_df %>%
 
 # save plots
 ggsave(
-  filename = file.path(graphics_dir, "epmc_search_overlap.tiff"),
+  filename = file.path(graphics_dir, "epmc_search_overlap.png"),
   plot = g_epmc,
-  device = "tiff",
+  device = "png",
   width = 12,
   dpi = 600
 )
 
 ggsave(
-  filename = file.path(graphics_dir, "epmc_search_overlap-min10.tiff"),
+  filename = file.path(graphics_dir, "epmc_search_overlap-min10.png"),
   plot = g_epmc10,
-  device = "tiff",
+  device = "png",
   width = 6,
   height = 3,
   dpi = 600
 )
 
 ggsave(
-  filename = file.path(graphics_dir, "pmc_search_overlap.tiff"),
+  filename = file.path(graphics_dir, "pmc_search_overlap.png"),
   plot = g_pmc,
-  device = "tiff",
+  device = "png",
   dpi = 600
 )
 
 ggsave(
-  filename = file.path(graphics_dir, "pm_search_overlap.tiff"),
+  filename = file.path(graphics_dir, "pm_search_overlap.png"),
   plot = g_pm,
-  device = "tiff",
+  device = "png",
   dpi = 600
 )
 

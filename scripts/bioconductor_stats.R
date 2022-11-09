@@ -20,8 +20,8 @@ data_dir <- here::here("data")
 plot_dir <- here::here("graphics")
 stats_all_file <- file.path(data_dir, "bioc_DO_stats.csv")
 stats_1y_file <- file.path(data_dir, "bioc_DO_stats-1yr-distinctIP.csv")
-plot_all_file <- file.path(plot_dir, "bioc_DO_stats-distinctIP.tiff")
-plot_1y_file <- file.path(plot_dir, "bioc_DO_stats-1yr-distinctIP.tiff")
+plot_all_file <- file.path(plot_dir, "bioc_DO_stats-distinctIP.png")
+plot_1y_file <- file.path(plot_dir, "bioc_DO_stats-1yr-distinctIP.png")
 
 
 

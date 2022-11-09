@@ -11,8 +11,8 @@ data_dir <- here::here("data/citedby/counts")
 manual_file <- file.path(data_dir, "ISB-citedby_counts-manual.csv")
 full_summary_file <- file.path(data_dir, "ISB-citedby_counts-manual_smry.csv")
 
-plot_2021 <- here::here("graphics/citedby_total_2021.tiff")
-plot_2022 <- here::here("graphics/citedby_total_2022.tiff")
+plot_2021 <- here::here("graphics/citedby_total_2021.png")
+plot_2022 <- here::here("graphics/citedby_total_2022.png")
 
 
 
@@ -76,8 +76,7 @@ ggsave(
   device = tools::file_ext(plot_2021),
   width = 2.5,
   height = 2.5,
-  dpi = 600,
-  compression = "zip"
+  dpi = 600
 )
 
 ggsave(
@@ -86,6 +85,5 @@ ggsave(
   device = tools::file_ext(plot_2022),
   width = 2,
   height = 3.45,
-  dpi = 600,
-  compression = "zip"
+  dpi = 600
 )

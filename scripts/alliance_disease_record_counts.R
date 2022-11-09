@@ -15,7 +15,7 @@ disobj_file <- file.path(data_dir, "disease_counts-disobj_by_obj.csv")
 disease_file <- file.path(data_dir, "disease_counts-disease_by_obj.csv")
 uniq_file <- file.path(data_dir, "disease_counts-unique_diseases.csv")
 
-plot_file <- here::here("graphics", "alliance_disobj_plot.tiff")
+plot_file <- here::here("graphics", "alliance_disobj_plot.png")
 
 
 # Ensure directory exists -------------------------------------------------
