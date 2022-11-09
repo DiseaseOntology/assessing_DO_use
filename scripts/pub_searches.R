@@ -294,7 +294,8 @@ ggsave(
   filename = file.path(graphics_dir, "epmc_search_overlap.tiff"),
   plot = g_epmc,
   device = "tiff",
-  width = 12
+  width = 12,
+  dpi = 600
 )
 
 ggsave(
@@ -302,19 +303,22 @@ ggsave(
   plot = g_epmc10,
   device = "tiff",
   width = 6,
-  height = 3
+  height = 3,
+  dpi = 600
 )
 
 ggsave(
   filename = file.path(graphics_dir, "pmc_search_overlap.tiff"),
   plot = g_pmc,
-  device = "tiff"
+  device = "tiff",
+  dpi = 600
 )
 
 ggsave(
   filename = file.path(graphics_dir, "pm_search_overlap.tiff"),
   plot = g_pm,
-  device = "tiff"
+  device = "tiff",
+  dpi = 600
 )
 
 
@@ -457,7 +461,9 @@ ggsave(
   g_total + theme(legend.position = "none"),
   filename = file.path(graphics_dir, "total_hits-graph.png"),
   device = "png",
-  dpi = 300, width = 1.47, height = 3.35
+  dpi = 600,
+  width = 1.47,
+  height = 3.35
 )
 # save only for legend (crop)
 ggsave(
@@ -465,7 +471,9 @@ ggsave(
   g_total + guides(fill = guide_legend(title.position = "left")),
   filename = file.path(graphics_dir, "total_hits-legend.png"),
   device = "png",
-  dpi = 300, width = 3, height = 3.35
+  dpi = 600,
+  width = 3,
+  height = 3.35
 )
 # save complete
 ggsave(
@@ -473,5 +481,7 @@ ggsave(
   g_total + guides(fill = guide_legend(title.position = "top")),
   filename = file.path(graphics_dir, "total_hits-complete.png"),
   device = "png",
-  dpi = 300, width = 3.5, height = 3.35
+  dpi = 600,
+  width = 3.5,
+  height = 3.35
 )
