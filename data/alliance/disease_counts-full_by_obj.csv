@@ -1,8 +1,10 @@
 species,gene.full_record_n,allele.full_record_n,model.full_record_n
-Caenorhabditis elegans,26444,534,472
-Danio rerio,48426,558,1905
-Drosophila melanogaster,26334,4438,0
-Homo sapiens,41892,0,0
-Mus musculus,41057,10353,6826
-Rattus norvegicus,37446,257,944
-Saccharomyces cerevisiae,9736,0,0
+Caenorhabditis elegans,27147,688,550
+Danio rerio,49461,569,1926
+Drosophila melanogaster,26960,4722,0
+Homo sapiens,42892,0,0
+Mus musculus,42119,10450,7774
+Rattus norvegicus,38272,257,944
+Saccharomyces cerevisiae,10021,0,0
+Xenopus laevis,29956,0,0
+Xenopus tropicalis,29541,0,0

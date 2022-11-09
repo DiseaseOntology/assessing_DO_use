@@ -1,8 +1,10 @@
 species,gene.disease_n,allele.disease_n,model.disease_n
-Caenorhabditis elegans,3966,85,45
-Danio rerio,5488,257,493
-Drosophila melanogaster,4195,494,0
-Homo sapiens,5715,0,0
-Mus musculus,5682,1713,1660
-Rattus norvegicus,5679,135,228
-Saccharomyces cerevisiae,2248,0,0
+Caenorhabditis elegans,4042,99,58
+Danio rerio,5599,260,496
+Drosophila melanogaster,4283,500,0
+Homo sapiens,5835,0,0
+Mus musculus,5802,1728,1768
+Rattus norvegicus,5798,135,228
+Saccharomyces cerevisiae,2285,0,0
+Xenopus laevis,4757,0,0
+Xenopus tropicalis,5219,0,0

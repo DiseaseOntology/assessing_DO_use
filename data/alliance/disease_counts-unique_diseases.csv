@@ -1,9 +1,11 @@
 species,disease_n
-Saccharomyces cerevisiae,2248
-Caenorhabditis elegans,3967
-Drosophila melanogaster,4217
-Danio rerio,5511
-Rattus norvegicus,5686
-Mus musculus,5706
-Homo sapiens,5715
-Alliance,5781
+Saccharomyces cerevisiae,2285
+Caenorhabditis elegans,4045
+Drosophila melanogaster,4304
+Xenopus laevis,4757
+Xenopus tropicalis,5219
+Danio rerio,5622
+Rattus norvegicus,5805
+Mus musculus,5832
+Homo sapiens,5835
+Alliance,5907
