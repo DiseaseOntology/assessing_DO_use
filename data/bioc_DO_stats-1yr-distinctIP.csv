@@ -1,5 +1,4 @@
 pkg,pkg_type,Year,Month,date,distinctIP_downloads
-DO.db,annotation,2021,Oct,2021-10-01,8716
 DO.db,annotation,2021,Nov,2021-11-01,9693
 DO.db,annotation,2021,Dec,2021-12-01,7920
 DO.db,annotation,2022,Jan,2022-01-01,8032
@@ -11,7 +10,7 @@ DO.db,annotation,2022,Jun,2022-06-01,11558
 DO.db,annotation,2022,Jul,2022-07-01,10332
 DO.db,annotation,2022,Aug,2022-08-01,8238
 DO.db,annotation,2022,Sep,2022-09-01,7589
-DOSE,software,2021,Oct,2021-10-01,12930
+DO.db,annotation,2022,Oct,2022-10-01,7934
 DOSE,software,2021,Nov,2021-11-01,12627
 DOSE,software,2021,Dec,2021-12-01,10008
 DOSE,software,2022,Jan,2022-01-01,9439
@@ -23,3 +22,4 @@ DOSE,software,2022,Jun,2022-06-01,12271
 DOSE,software,2022,Jul,2022-07-01,10916
 DOSE,software,2022,Aug,2022-08-01,8595
 DOSE,software,2022,Sep,2022-09-01,11661
+DOSE,software,2022,Oct,2022-10-01,10735
