@@ -9,6 +9,8 @@ library(europepmc)
 library(rentrez)
 library(DO.utils)
 library(ggupset)
+library(ggvenn)
+library(hues)
 
 
 # Define Output Location & Searches ---------------------------------------
@@ -74,7 +76,8 @@ if (!file.exists(epmc_raw_file)) {
 }
 
 if (!file.exists(epmc_df_file)) {
-  epmc_df <- dplyr::bind_rows(epmc_res$result, .id = "search_id")
+  epmc_df <- dplyr::bind_rows(epmc_res$result, .id = "search_id") %>%
+    dplyr::mutate(pmid = as.character(pmid))
   readr::write_csv(epmc_df, epmc_df_file)
 } else {
   epmc_df <- readr::read_csv(epmc_df_file)
@@ -209,10 +212,6 @@ search_n <- dplyr::bind_rows(
 readr::write_csv(search_n, file.path(data_dir, "search_res_n.csv"), na = "0")
 
 
-# Identify overlap in searches --------------------------------------------
-epmc_pm_match <- DO.utils::match_citations(epmc_df, pm_df)
-epmc_pmc_match <- DO.utils::match_citations(epmc_df, pmc_df)
-
 # Actual searches performed -----------------------------------------------
 actual_search <- tibble::tibble(
   search_id = names(search_terms),
@@ -316,4 +315,101 @@ ggsave(
   filename = file.path(graphics_dir, "pm_search_overlap.tiff"),
   plot = g_pm,
   device = "tiff"
+)
+
+
+# Identify overlap across sources -----------------------------------------
+best_search <- c("ns_id", "generic_name", "website")
+epmc_match <- epmc_df %>%
+  # limit to meaningful searches
+  dplyr::filter(search_id %in% best_search) %>%
+  dplyr::select(id, pmid:doi) %>%
+  unique() %>%
+  dplyr::mutate(
+    src = "epmc",
+    id = dplyr::row_number()
+  )
+
+# requires matching by all available identifiers
+pmc_compare <- pmc_df %>%
+  dplyr::filter(search_id %in% best_search) %>%
+  dplyr::select(-search_id) %>%
+  unique() %>%
+  # position matches row number so no need for replacement
+  DO.utils::match_citations(epmc_match, add_col = "id") %>%
+  dplyr::arrange(id) %>%
+  dplyr::mutate(src = "pmc")
+
+pmc_uniq <- pmc_compare %>%
+  dplyr::filter(is.na(id)) %>%
+  dplyr::mutate(id = max(epmc_match$id) + dplyr::row_number())
+pmc_match <- pmc_compare %>%
+  dplyr::filter(!is.na(id))
+
+pm_compare <- pm_df %>%
+  dplyr::filter(search_id %in% best_search) %>%
+  dplyr::select(-search_id) %>%
+  unique() %>%
+  DO.utils::match_citations(epmc_match, add_col = "id1") %>%
+  DO.utils::match_citations(pmc_uniq, add_col = "id2") %>%
+  dplyr::mutate(
+    id2 = pmc_uniq$id[id2],
+    id = dplyr::if_else(!is.na(id1), id1, id2),
+    src = "pm"
+  ) %>%
+  dplyr::select(-id1, -id2) %>%
+  dplyr::arrange(id)
+
+pm_uniq <- pm_compare %>%
+  dplyr::filter(is.na(id)) %>%
+  dplyr::mutate(id = max(pmc_uniq$id) + dplyr::row_number())
+pm_match <- pm_compare %>%
+  dplyr::filter(!is.na(id))
+
+src_match <- dplyr::bind_rows(
+  epmc_match,
+  pmc_match,
+  pmc_uniq,
+  pm_match,
+  pm_uniq
+)
+
+src <- unique(src_match$src)
+g_src_venn <- purrr::map(
+  src,
+  ~ src_match$id[src_match$src == .x]
+  ) %>%
+  purrr::set_names(nm = dplyr::recode(
+      src,
+      pmc = "PubMed Central",
+      pm = "PubMed",
+      epmc = "Europe PMC"
+    )
+  ) %>%
+  ggvenn(fill_color = hues::iwanthue(3, random = TRUE))
+
+g_src_upset <- src_match %>%
+  dplyr::mutate(
+    src = dplyr::recode(
+      src,
+      pmc = "PubMed Central",
+      pm = "PubMed",
+      epmc = "Europe PMC"
+    )
+  ) %>%
+  plot_upset(id_col = id, overlap_col = src, x = "Source", y = "Hits")
+
+
+ggsave(
+  filename = file.path(graphics_dir, "search_src_overlap-venn.png"),
+  plot = g_src_venn,
+  device = "png",
+  dpi = 600
+)
+
+ggsave(
+  filename = file.path(graphics_dir, "search_src_overlap-upset.png"),
+  plot = g_src_upset,
+  device = "png",
+  dpi = 600
 )
