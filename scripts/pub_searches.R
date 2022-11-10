@@ -332,7 +332,8 @@ epmc_match <- epmc_df %>%
   dplyr::mutate(
     src = "epmc",
     id = dplyr::row_number()
-  )
+  ) %>%
+  dplyr::select(id, src, pmid:doi, epmc_id)
 
 # requires matching by all available identifiers
 pmc_compare <- pmc_df %>%
@@ -378,6 +379,11 @@ src_match <- dplyr::bind_rows(
   pm_uniq
 )
 
+# save source comparison data
+readr::write_csv(src_match, file.path(data_dir, "src_comparison.csv"))
+
+
+# create & save plots
 src <- unique(src_match$src)
 g_src_venn <- purrr::map(
   src,
