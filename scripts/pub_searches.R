@@ -327,7 +327,7 @@ best_search <- c("ns_id", "generic_name", "website")
 epmc_match <- epmc_df %>%
   # limit to meaningful searches
   dplyr::filter(search_id %in% best_search) %>%
-  dplyr::select(id, pmid:doi) %>%
+  dplyr::select(epmc_id = id, pmid:doi) %>%
   unique() %>%
   dplyr::mutate(
     src = "epmc",
