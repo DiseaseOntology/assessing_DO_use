@@ -13,11 +13,13 @@ library(tidyverse)
 library(scales)
 library(hues)
 
+data_dir <- here::here("data/cfde")
+cfde_input <- file.path(data_dir, "CFDE_data-program_sample_disease.csv")
+cfde_summary_file <- file.path(data_dir, "cfde_disease_counts.csv")
+cfde_plot <- here::here("graphics/cfde_disease.png")
 
 
-cfde <- readr::read_csv(
-  here::here("data/CFDE_data-program_sample_disease.csv")
-)
+cfde <- readr::read_csv(cfde_input)
 
 cfde_tidy <- cfde %>%
   tidyr::pivot_longer(
@@ -49,10 +51,7 @@ cfde_n <- cfde_tidy %>%
   dplyr::select(-disease_status) %>%
   dplyr::arrange(dplyr::desc(sample_total), dplyr::desc(sample_n), dcc)
 
-readr::write_csv(
-  cfde_n,
-  here::here("data/cfde_disease_counts.csv")
-)
+readr::write_csv(cfde_n, cfde_summary_file)
 
 
 g <- cfde_n %>%
@@ -76,10 +75,7 @@ g <- cfde_n %>%
     aes(y = 0, label = pct_total),
     vjust = 1,
     nudge_y = -1000000,
-    # fill = "white",
-    size = 2.5,
-    # label.padding = unit(0.5, "lines"),
-    # label.size = NA
+    size = 2.5
   ) +
   scale_y_continuous(
     name = "Samples",
@@ -97,7 +93,7 @@ g <- cfde_n %>%
   )
 
 ggsave(
-  filename = here::here("graphics/cfde_disease.png"),
+  filename = cfde_plot,
   plot = g,
   device = "png",
   dpi = 600,
