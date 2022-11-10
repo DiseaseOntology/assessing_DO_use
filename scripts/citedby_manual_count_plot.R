@@ -8,12 +8,16 @@ library(lubridate)
 
 # SPECIFY file paths ------------------------------------------------------
 data_dir <- here::here("data/citedby/counts")
-manual_file <- file.path(data_dir, "ISB-citedby_counts-manual.csv")
-full_summary_file <- file.path(data_dir, "ISB-citedby_counts-manual_smry.csv")
+manual_file <- file.path(data_dir, "citedby_counts-manual.csv")
+full_summary_file <- file.path(data_dir, "citedby_counts-manual_smry.csv")
 
-plot_2021 <- here::here("graphics/citedby_total_2021.png")
-plot_2022 <- here::here("graphics/citedby_total_2022.png")
+graphics_dir <- here::here("graphics/citedby")
+plot_2021 <- file.path(graphics_dir, "citedby_manual_comparison_2021.png")
+plot_2022 <- file.path(graphics_dir, "citedby_manual_comparison_2022.png")
 
+if (!dir.exists(graphics_dir)) {
+  dir.create(graphics_dir, recursive = TRUE)
+}
 
 
 # Load manual count data --------------------------------------------------
