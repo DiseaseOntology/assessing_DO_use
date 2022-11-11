@@ -96,13 +96,16 @@ readr::write_csv(compare_df, comparison_file)
 
 # plot comparison & save
 compare_list <- list(
-  citedby = compare_df$id[compare_df$from %in% c("citedby", "both")],
-  search = compare_df$id[compare_df$from %in% c("search", "both")]
+  "Cited By" = compare_df$id[compare_df$from %in% c("citedby", "both")],
+  "Search" = compare_df$id[compare_df$from %in% c("search", "both")]
 )
 
 g_venn <- ggvenn::ggvenn(
   compare_list,
-  fill_color = hues::iwanthue(2, random = TRUE)
+  fill_color = hues::iwanthue(2, random = TRUE),
+  stroke_size = 0.5,
+  set_name_size = 4,
+  text_size = 4
 )
 
 ggsave(
@@ -111,7 +114,7 @@ ggsave(
   device = tools::file_ext(comparison_plot),
   dpi = 600,
   width = 4,
-  height = 3
+  height = 4
 )
 
 # Details - Search Unique -------------------------------------------------
@@ -146,14 +149,19 @@ g_pub_type <- search_uniq %>%
   dplyr::count(pub_type, sort = TRUE) %>%
   dplyr::mutate(
     # order largest to smallest
-    pub_type = factor(pub_type, levels = pub_type),
+    pub_type = factor(pub_type, levels = rev(pub_type)),
     pct = paste0(round( n / sum(n) * 100, 1), "%")
   ) %>%
   ggplot() +
   geom_col(aes(x = pub_type, y = n)) +
-  geom_text(aes(x = pub_type, y = n + 20, label = pct), vjust = 0) +
+  geom_text(aes(x = pub_type, y = n + 20, label = pct), size = 3, hjust = 0) +
   labs(x = "Publication Type", y = "Total Publications") +
-  scale_y_continuous(labels = scales::label_comma())
+  scale_y_continuous(
+    labels = scales::label_comma(),
+    expand = expansion(mult = c(0.05, 0.15))
+  ) +
+  theme_minimal() +
+  coord_flip()
 
 ggsave(
   plot = g_pub_type,
