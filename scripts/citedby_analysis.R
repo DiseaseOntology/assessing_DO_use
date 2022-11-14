@@ -63,6 +63,20 @@ ggsave(
 )
 
 
+
+# MyNCBI collection - Uses not citing DO ----------------------------------
+
+ncbi_cites <- cb_data %>%
+  dplyr::filter(stringr::str_detect(source, "ncbi")) %>%
+  dplyr::mutate(cites_DO = !is.na(cites)) %>%
+  dplyr::count(cites_DO) %>%
+  dplyr::mutate(pct = round(n / sum(n) * 100, 1))
+
+readr::write_csv(
+  ncbi_cites,
+  file.path(data_dir, "MyNCBI_collection_cites.csv")
+)
+
 # Analysis: 2021-09 to 2022-09 --------------------------------------------
 
 cb_tidy <- cb_data %>%
