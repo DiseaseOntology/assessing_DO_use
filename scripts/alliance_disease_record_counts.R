@@ -136,9 +136,9 @@ full_long <- full_record %>%
   dplyr::mutate(
     species = factor(
       species,
-      levels = c("Saccharomyces cerevisiae", "Caenorhabditis elegans",
-                 "Drosophila melanogaster", "Danio rerio",
-                 "Mus musculus", "Rattus norvegicus", "Homo sapiens")
+      levels = c("Caenorhabditis elegans", "Danio rerio", "Drosophila melanogaster",
+                 "Homo sapiens", "Mus musculus", "Rattus norvegicus",
+                 "Saccharomyces cerevisiae", "Xenopus laevis", "Xenopus tropicalis")
     )
   ) %>%
   dplyr::rename(n = "full_record_n", Species = species)
