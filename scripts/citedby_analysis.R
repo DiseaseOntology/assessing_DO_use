@@ -122,14 +122,39 @@ cb_use %>%
   DO.utils::count_delim(research_area, delim = "|", sort = TRUE) %>%
   readr::write_csv(file.path(data_dir, "research_area.csv"))
 
-# summarize use cases (all time)
+
+
+# Summarize use cases (all time & within last year) -----------------------
+
 use_case <- googlesheets4::read_sheet(
   gs,
   "DO_website_user_list",
   col_types = "c"
 )
 
-use_case %>%
+use_case_last_yr <- cb_tidy %>%
+  dplyr::filter(!is.na(user_ID))
+
+use_case_counts <- use_case %>%
   dplyr::filter(added == "TRUE") %>%
-  dplyr::count(type) %>%
-  readr::write_csv(file.path(data_dir, "use_cases-all_time.csv"))
+  dplyr::mutate(
+    added_recent = user_ID %in% use_case_last_yr$user_ID & !duplicated(user_ID)
+  ) %>%
+  dplyr::group_by(type) %>%
+  dplyr::summarize(
+    Total = length(user_ID),
+    "Added in Last Year" = sum(added_recent)
+  ) %>%
+  dplyr::ungroup() %>%
+  dplyr::mutate(type = stringr::str_to_title(type)) %>%
+  dplyr::rename(Type = type) %>%
+  tibble::add_row(
+    Type = "Total",
+    Total = sum(.$Total),
+    `Added in Last Year` = sum(.$`Added in Last Year`)
+  )
+
+readr::write_csv(
+  use_case_counts,
+  file.path(data_dir, "use_case_counts.csv")
+)
