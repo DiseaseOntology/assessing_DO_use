@@ -1,12 +1,12 @@
-dcc,sample_n,sample_total,pct_total
-LINCS,32686920,36137881,90.5
-HMP,79648,3496374,2.3
-KFDRC,376132,1134844,33.1
-ERCC_DCC,424728,626520,67.8
-MW,74061,186965,39.6
-GTEx,0,50836,0
-SPARC,0,26756,0
-4DN_DCIC,0,3621,0
-HuBMAP,0,484,0
-GlyGen,0,0,NA
-IDG,0,0,NA
+DCC,Disease Annotated Samples,Total Samples,Percent Disease Annotated
+LINCS,"32,686,920","36,137,881",90.5
+HMP,"    79,648"," 3,496,374",2.3
+KFDRC,"   376,132"," 1,134,844",33.1
+ERCC_DCC,"   424,728","   626,520",67.8
+MW,"    74,061","   186,965",39.6
+GTEx,         0,"    50,836",0
+SPARC,         0,"    26,756",0
+4DN_DCIC,         0,"     3,621",0
+HuBMAP,         0,       484,0
+GlyGen,         0,         0,NA
+IDG,         0,         0,NA
