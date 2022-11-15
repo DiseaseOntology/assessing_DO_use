@@ -106,7 +106,7 @@ status_use <- cb_tidy %>%
   dplyr::count(status, uses_DO) %>%
   dplyr::arrange(status, dplyr::desc(n))
 
-readr::write_csv(status_use, file.path(data_dir, "status_uses.csv"))
+readr::write_csv(status_use, file.path(data_dir, "status_uses_count.csv"))
 
 
 # limit remaining analysis to publications that use DO only
@@ -116,21 +116,21 @@ cb_use <- cb_tidy %>%
 use_type <- cb_use %>%
   DO.utils::count_delim(use_type, delim = "|", sort = TRUE)
 
-readr::write_csv(use_type, file.path(data_dir, "use_type.csv"))
+readr::write_csv(use_type, file.path(data_dir, "use_type_count.csv"))
 
 
 role <- cb_use %>%
   DO.utils::count_delim(tool_role, delim = "|") %>%
   dplyr::arrange(dplyr::desc(n))
 
-readr::write_csv(role, file.path(data_dir, "tool_roles.csv"))
+readr::write_csv(role, file.path(data_dir, "tool_roles_count.csv"))
 
 
 ra <- cb_use %>%
   DO.utils::count_delim(research_area, delim = "|") %>%
   dplyr::arrange(dplyr::desc(n), research_area)
 
-readr::write_csv(ra, file.path(data_dir, "research_area.csv"))
+readr::write_csv(ra, file.path(data_dir, "research_area_count.csv"))
 
 
 
@@ -166,5 +166,5 @@ use_case_counts <- use_case %>%
 
 readr::write_csv(
   use_case_counts,
-  file.path(data_dir, "use_case_counts.csv")
+  file.path(data_dir, "use_case_count.csv")
 )
