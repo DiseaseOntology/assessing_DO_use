@@ -116,8 +116,8 @@ cb_use <- cb_reviewed %>%
   dplyr::filter(uses_DO %in% c("yes", "minor"))
 
 cb_use %>%
-  DO.utils::count_delim(role, delim = "|", sort = TRUE) %>%
-  readr::write_csv(file.path(data_dir, "roles.csv"))
+  DO.utils::count_delim(tool_role, delim = "|", sort = TRUE) %>%
+  readr::write_csv(file.path(data_dir, "tool_roles.csv"))
 
 cb_use %>%
   DO.utils::count_delim(research_area, delim = "|", sort = TRUE) %>%
