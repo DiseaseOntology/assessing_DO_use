@@ -134,16 +134,16 @@ use_case <- googlesheets4::read_sheet(
 )
 
 use_case_last_yr <- cb_tidy %>%
-  dplyr::filter(!is.na(user_ID))
+  dplyr::filter(!is.na(tool_ID))
 
 use_case_counts <- use_case %>%
   dplyr::filter(added == "TRUE") %>%
   dplyr::mutate(
-    added_recent = user_ID %in% use_case_last_yr$user_ID & !duplicated(user_ID)
+    added_recent = tool_ID %in% use_case_last_yr$tool_ID & !duplicated(tool_ID)
   ) %>%
   dplyr::group_by(type) %>%
   dplyr::summarize(
-    Total = length(user_ID),
+    Total = length(tool_ID),
     "Added in Last Year" = sum(added_recent)
   ) %>%
   dplyr::ungroup() %>%
