@@ -96,11 +96,7 @@ cb_tidy <- cb_data %>%
       stringr::str_detect(review, "paywall") ~ "inaccessible",
       TRUE ~ "not reviewed"
     ),
-    uses_DO = dplyr::case_when(
-      is.na(uses_DO) ~ NA_character_,
-      stringr::str_detect(uses_DO, "^(minimal|supplement|indirect)") ~ "minor",
-      TRUE ~ stringr::str_remove(uses_DO, ",.*")
-    ),
+    uses_DO = stringr::str_remove(uses_DO, ",.*"),
     source = stringr::str_replace_all(source, "(ncbi_col)-[^ ;]", "\\1"),
     cites_DO = stringr::str_detect(source, "pubmed|scopus")
   )
