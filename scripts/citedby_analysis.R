@@ -77,6 +77,8 @@ readr::write_csv(
   file.path(data_dir, "MyNCBI_collection_cites.csv")
 )
 
+
+
 # Analysis: 2021-09 to 2022-09 --------------------------------------------
 
 cb_tidy <- cb_data %>%
@@ -99,17 +101,16 @@ cb_tidy <- cb_data %>%
     cites_DO = stringr::str_detect(source, "pubmed|scopus")
   )
 
-# save review status
-cb_tidy %>%
-  dplyr::count(status, sort = TRUE) %>%
-  readr::write_csv(file.path(data_dir, "status.csv"))
+# save review status + use
+status_use <- cb_tidy %>%
+  dplyr::count(status, uses_DO) %>%
+  dplyr::arrange(status, dplyr::desc(n))
+
+readr::write_csv(status_use, file.path(data_dir, "status_uses.csv"))
+
 
 cb_reviewed <- cb_tidy %>%
   dplyr::filter(!status %in% c("inaccessible", "not reviewed"))
-
-cb_reviewed %>%
-  dplyr::count(uses_DO, sort = TRUE) %>%
-  readr::write_csv(file.path(data_dir, "uses_DO.csv"))
 
 cb_use <- cb_reviewed %>%
   dplyr::filter(uses_DO %in% c("yes", "minor"))
