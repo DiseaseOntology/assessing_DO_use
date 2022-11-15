@@ -109,19 +109,28 @@ status_use <- cb_tidy %>%
 readr::write_csv(status_use, file.path(data_dir, "status_uses.csv"))
 
 
-cb_reviewed <- cb_tidy %>%
-  dplyr::filter(!status %in% c("inaccessible", "not reviewed"))
-
-cb_use <- cb_reviewed %>%
+# limit remaining analysis to publications that use DO only
+cb_use <- cb_tidy %>%
   dplyr::filter(uses_DO %in% c("yes", "minor"))
 
-cb_use %>%
-  DO.utils::count_delim(tool_role, delim = "|", sort = TRUE) %>%
-  readr::write_csv(file.path(data_dir, "tool_roles.csv"))
+use_type <- cb_use %>%
+  DO.utils::count_delim(use_type, delim = "|", sort = TRUE)
 
-cb_use %>%
-  DO.utils::count_delim(research_area, delim = "|", sort = TRUE) %>%
-  readr::write_csv(file.path(data_dir, "research_area.csv"))
+readr::write_csv(use_type, file.path(data_dir, "use_type.csv"))
+
+
+role <- cb_use %>%
+  DO.utils::count_delim(tool_role, delim = "|") %>%
+  dplyr::arrange(dplyr::desc(n))
+
+readr::write_csv(role, file.path(data_dir, "tool_roles.csv"))
+
+
+ra <- cb_use %>%
+  DO.utils::count_delim(research_area, delim = "|") %>%
+  dplyr::arrange(dplyr::desc(n), research_area)
+
+readr::write_csv(ra, file.path(data_dir, "research_area.csv"))
 
 
 
