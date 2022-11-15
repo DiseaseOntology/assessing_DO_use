@@ -64,17 +64,21 @@ ggsave(
 
 
 
-# MyNCBI collection - Uses not citing DO ----------------------------------
+
+# MyNCBI collection - Uses not citing DO (< 2021-08) ----------------------
 
 ncbi_cites <- cb_data %>%
-  dplyr::filter(stringr::str_detect(source, "ncbi")) %>%
+  dplyr::filter(
+    stringr::str_detect(source, "ncbi"),
+    pub_date < as.Date("2021-08-01")
+    ) %>%
   dplyr::mutate(cites_DO = !is.na(cites)) %>%
   dplyr::count(cites_DO) %>%
   dplyr::mutate(pct = round(n / sum(n) * 100, 1))
 
 readr::write_csv(
   ncbi_cites,
-  file.path(data_dir, "MyNCBI_collection_cites.csv")
+  file.path(data_dir, "MyNCBI_collection_cites-mid2021.csv")
 )
 
 
