@@ -51,7 +51,15 @@ cfde_n <- cfde_tidy %>%
   dplyr::select(-disease_status) %>%
   dplyr::arrange(dplyr::desc(sample_total), dplyr::desc(sample_n), dcc)
 
-readr::write_csv(cfde_n, cfde_summary_file)
+cfde_n %>%
+  dplyr::mutate(
+    dplyr::across(dplyr::starts_with("sample"), ~ format(.x, big.mark = ","))
+  ) %>%
+  dplyr::rename(
+    DCC = dcc, "Disease Annotated Samples" = sample_n,
+    "Total Samples" = sample_total, "Percent Disease Annotated" = pct_total
+  ) %>%
+readr::write_csv(cfde_summary_file)
 
 
 g <- cfde_n %>%
@@ -69,18 +77,19 @@ g <- cfde_n %>%
     names_prefix = "sample_",
     values_to = "count"
   ) %>%
+  dplyr::mutate(`Disease Annotated` = type == "n") %>%
   ggplot(aes(x = dcc)) +
-  geom_col(aes(y = count, fill = type)) +
+  geom_col(aes(y = count, fill = `Disease Annotated`)) +
   geom_text(
     aes(y = 0, label = pct_total),
     vjust = 1,
     nudge_y = -1000000,
-    size = 2.5
+    size = 3.5
   ) +
   scale_y_continuous(
     name = "Samples",
-    labels = scales::label_comma(),
-    expand = expansion(mult = c(0.05, 0.05))
+    labels = scales::label_number(suffix = "M", scale = 1e-6),
+    expand = expansion(mult = c(0.06, 0.05))
   ) +
   scale_x_discrete(name = "CFDE Program") +
   scale_fill_manual(values = c("grey70", "grey30")) +
@@ -89,7 +98,9 @@ g <- cfde_n %>%
     axis.text = element_text(size = 10),
     axis.text.x = element_text(angle = 45, hjust = 1),
     panel.grid.major.x = element_blank(),
-    legend.position = "none"
+    legend.position = "top",
+    legend.text = element_text(size = 10),
+    legend.box.spacing = unit(0, units = "points")
   )
 
 ggsave(
@@ -98,5 +109,5 @@ ggsave(
   device = "png",
   dpi = 600,
   width = 4.5,
-  height = 3
+  height = 3.5
 )
