@@ -193,7 +193,7 @@ uniq_review <- search_uniq %>%
     )
   )
 
-cols_out <- c("review", "cites_DO", "uses_DO", "conflated_with", "id", "title",
+cols_out <- c("review_notes", "cites_DO", "uses_DO", "conflated_with", "id", "title",
               "pmid", "pmcid","doi", "epmc_id", "pub_type",
               "firstPublicationDate")
 

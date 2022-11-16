@@ -93,7 +93,7 @@ cb_tidy <- cb_data %>%
   dplyr::mutate(
     status = dplyr::case_when(
       !is.na(uses_DO) ~ "reviewed",
-      stringr::str_detect(review, "paywall") ~ "inaccessible",
+      stringr::str_detect(review_notes, "paywall") ~ "inaccessible",
       TRUE ~ "not reviewed"
     ),
     uses_DO = stringr::str_remove(uses_DO, ",.*"),
