@@ -25,16 +25,18 @@ if (!dir.exists(graphics_dir)) {
 
 
 
-# Google sheet ------------------------------------------------------------
+# Load Data ------------------------------------------------------------
+# cited by Google Sheet
 gs <- "1wG-d0wt-9YbwhQTaelxqRzbm4qnu11WDM2rv3THy5mY"
 cb_sheet <- "cited_by"
-
 
 cb_data <- googlesheets4::read_sheet(gs, sheet = cb_sheet, col_type = "c") %>%
   dplyr::mutate(
     dplyr::across(dplyr::matches("_(dt|date)$"), readr::parse_guess)
   )
 
+# time to review file
+review_time <- readr::read_csv(file.path(data_dir, "time_to_review.csv"))
 
 
 
@@ -64,7 +66,6 @@ ggsave(
 
 
 
-
 # MyNCBI collection - Uses not citing DO (< 2021-08) ----------------------
 
 ncbi_cites <- cb_data %>%
@@ -80,6 +81,25 @@ readr::write_csv(
   ncbi_cites,
   file.path(data_dir, "MyNCBI_collection_cites-mid2021.csv")
 )
+
+
+
+# Analysis of time it takes for review/curation ---------------------------
+
+time_anal <- review_time %>%
+  dplyr::mutate(time_per_pub = time_min / pubs_reviewed) %>%
+  dplyr::group_by(type) %>%
+  dplyr::summarize(
+      value = as.numeric(summary(time_per_pub)),
+      output = c("Min.", "1st Qu.", "Median", "Mean", "3rd Qu.", "Max.")
+  ) %>%
+  dplyr::ungroup() %>%
+  tidyr::pivot_wider(
+    names_from = output,
+    values_from = value
+  )
+
+readr::write_csv(time_anal, file.path(data_dir, "review_time_summary.csv"))
 
 
 
