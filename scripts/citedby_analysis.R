@@ -6,7 +6,6 @@ library(tidyverse)
 library(googlesheets4)
 library(DO.utils)
 library(hues)
-library(ggrepel)
 
 
 
