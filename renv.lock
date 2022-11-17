@@ -18,16 +18,16 @@
     },
     "DO.utils": {
       "Package": "DO.utils",
-      "Version": "0.2.0",
+      "Version": "0.2.5",
       "Source": "GitHub",
-      "RemoteType": "github",
       "Remotes": "allenbaron/rentrez",
+      "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteRepo": "DO.utils",
       "RemoteUsername": "allenbaron",
-      "RemoteRef": "v0.2.0",
-      "RemoteSha": "52cf1c04069d61b838a3cc3bb5115dc47a084254",
-      "Hash": "93b1fd5bda4790067603806c5c6b8983"
+      "RemoteRef": "v0.2.5",
+      "RemoteSha": "6904384bd49d55d6dac49812ecebbefff859ebe4",
+      "Hash": "e14451ef43000e441a3774548d2e6157"
     },
     "DT": {
       "Package": "DT",
@@ -357,6 +357,20 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "0fb26d0674c82705c6b701d1a61e02ea"
+    },
+    "ggupset": {
+      "Package": "ggupset",
+      "Version": "0.3.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "8e9eb92bf465601c07d17c5e8b75dce1"
+    },
+    "ggvenn": {
+      "Package": "ggvenn",
+      "Version": "0.1.9",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "317f65bef864edb843b67fbdcd14da85"
     },
     "glue": {
       "Package": "glue",
