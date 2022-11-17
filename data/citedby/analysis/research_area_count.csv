@@ -1,0 +1,75 @@
+research_area,n
+association > disease-genetic,26
+biomedical literature mining,4
+lncRNA,4
+brain,3
+drug > repurposing,3
+miRNA,3
+association > disease-protein,2
+biomarkers,2
+circRNA,2
+dietary supplement > herbal,2
+exposure,2
+genomics,2
+human disease,2
+knowledge graphs,2
+protein > protein interactions,2
+NA,2
+amyloids,1
+anatomical structure,1
+association > disease-disease,1
+association > disease-metabolite,1
+association > drug-gene,1
+bacteria,1
+biology,1
+chemigenomics,1
+comorbidities,1
+dietary supplement > repurposing,1
+DNA structure,1
+drug > development,1
+drug > discovery,1
+drug > indications,1
+drug > targets,1
+enhancers,1
+flies,1
+food,1
+fumarate,1
+genetic drivers,1
+gluten,1
+health outcomes,1
+high-dimensional visualization,1
+inflammation,1
+liquid-liquid phase separation,1
+medical terminology,1
+metadata,1
+model organisms,1
+molecular interactions,1
+multi-species,1
+national research data infrastructure,1
+NER,1
+neurons,1
+NLP,1
+omics,1
+ontology > relationships,1
+patient data,1
+PBPK modeling,1
+pharmacology,1
+plants,1
+plasmids,1
+protein > pathogenic,1
+R-loops,1
+Radiology,1
+rare disease,1
+sex differences,1
+single-cell transcriptomics,1
+survival analysis,1
+systems pharmacology,1
+toxicogenomics,1
+transcriptomics,1
+urban populations,1
+variant > annotation,1
+variant > interpretation,1
+variant > synonymous single nucleotide,1
+worms,1
+yeast,1
+zebrafish,1
