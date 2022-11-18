@@ -6,6 +6,7 @@ library(tidyverse)
 library(googlesheets4)
 library(DO.utils)
 library(hues)
+library(ggvenn)
 
 
 
@@ -79,6 +80,50 @@ ncbi_cites <- cb_data %>%
 readr::write_csv(
   ncbi_cites,
   file.path(data_dir, "MyNCBI_collection_cites-mid2021.csv")
+)
+
+
+# "cited by" counts by source and overlap ---------------------------------
+
+# counts
+cb_src_count <- cb_data %>%
+  dplyr::mutate(source = stringr::str_remove(source, "-[^ ;]+")) %>%
+  DO.utils::count_delim(source, delim = "; ")
+
+readr::write_csv(cb_src_count, file.path(data_dir, "citedby_source_count.csv"))
+
+# overlap with venn diagram
+cb_src <- cb_data %>%
+  dplyr::mutate(
+    id = dplyr::row_number(),
+    source = stringr::str_remove(source, "-[^ ;]+")
+  ) %>%
+  DO.utils::lengthen_col(source, delim = "; ") %>%
+  dplyr::select(id, source)
+
+src <- unique(cb_src$source)
+g_src_venn <- purrr::map(src, ~ cb_src$id[cb_src$source == .x]) %>%
+  purrr::set_names(
+    nm = dplyr::recode(
+      src,
+      ncbi_col = "MyNCBI collection",
+      pubmed = "PubMed",
+      scopus = "Scopus"
+    )
+  ) %>%
+  ggvenn(
+    fill_color = hues::iwanthue(3, random = TRUE),
+    stroke_size = 0.5,
+    set_name_size = 4,
+    text_size = 4
+  )
+
+ggsave(
+  plot = g_src_venn,
+  filename = file.path(graphics_dir, "citedy_source_overlap-venn.png"),
+  dpi = 600,
+  width = 7,
+  height = 7
 )
 
 
