@@ -198,6 +198,11 @@ ra <- cb_use %>%
 readr::write_csv(ra, file.path(data_dir, "research_area_count.csv"))
 
 
+disease <- cb_use %>%
+  dplyr::count(disease) %>%
+  dplyr::arrange(dplyr::desc(n), disease)
+
+readr::write_csv(disease, file.path(data_dir, "disease_count.csv"))
 
 # Summarize use cases (all time & within last year) -----------------------
 
