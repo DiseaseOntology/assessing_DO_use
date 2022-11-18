@@ -1,0 +1,17 @@
+disease,n
+NA,55
+cancer (DOID:162),5
+COVID-19 (DOID:0080600),2
+age related macular degeneration (DOID:10871),1
+amyloidosis (DOID:9120),1
+amyotrophic lateral sclerosis (DOID:332),1
+ankylosing spondylitis (DOID:7147),1
+brain disease (DOID:936),1
+congestive heart failure (DOID:6000),1
+Ehlers-Danlos syndrome periodontal type 1 (DOID:0080986),1
+gastrointestinal stromal tumor (DOID:9253),1
+myocardial infarction (DOID:5844),1
+relapsing-remitting multiple sclerosis (DOID:2378),1
+systemic lupus erythematosus (DOID:9074),1
+Turner syndrome (DOID:3491),1
+urinary bladder cancer (DOID:11054),1
