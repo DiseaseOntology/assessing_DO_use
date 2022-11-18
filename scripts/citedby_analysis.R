@@ -184,6 +184,7 @@ readr::write_csv(use_type, file.path(data_dir, "use_type_count.csv"))
 
 
 role <- cb_use %>%
+  dplyr::filter(!stringr::str_detect(use_type, "review|anal")) %>%
   DO.utils::count_delim(tool_role, delim = "|") %>%
   dplyr::arrange(dplyr::desc(n))
 
