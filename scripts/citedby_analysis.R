@@ -143,6 +143,17 @@ time_anal <- review_time %>%
     values_from = value
   )
 
+# add overall values including both types
+overall_time <- review_time %>%
+  dplyr::mutate(time_per_pub = time_min / pubs_reviewed) %>%
+  .$time_per_pub %>%
+  summary() %>%
+  as.list() %>%
+  append(list(type = "overall"), .) %>%
+  dplyr::bind_cols()
+
+time_anal <- dplyr::bind_rows(time_anal, overall_time)
+
 readr::write_csv(time_anal, file.path(data_dir, "review_time_summary.csv"))
 
 
