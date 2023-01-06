@@ -78,8 +78,8 @@ ggsave(
   g_2021,
   filename = plot_2021,
   device = tools::file_ext(plot_2021),
-  width = 2.5,
-  height = 2.5,
+  width = 3.2,
+  height = 3.2,
   dpi = 600,
   bg = "white"
 )
