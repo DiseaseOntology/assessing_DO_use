@@ -24,7 +24,7 @@ library(googlesheets4)
 # Files -------------------------------------------------------------------
 
 # Google sheet - Final place for storage & review
-gs <- "1wG-d0wt-9YbwhQTaelxqRzbm4qnu11WDM2rv3THy5mY"
+gs <- "1soEnbGY2uVVDEC_xKOpjs9WQg-wQcLiXqmh_iJ-2qsM"
 cb_sheet <- "cited_by"
 
 ##### local files ######

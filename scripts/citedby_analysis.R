@@ -27,7 +27,7 @@ if (!dir.exists(graphics_dir)) {
 
 # Load Data ------------------------------------------------------------
 # cited by Google Sheet
-gs <- "1wG-d0wt-9YbwhQTaelxqRzbm4qnu11WDM2rv3THy5mY"
+gs <- "1soEnbGY2uVVDEC_xKOpjs9WQg-wQcLiXqmh_iJ-2qsM"
 cb_sheet <- "cited_by"
 
 cb_data <- googlesheets4::read_sheet(gs, sheet = cb_sheet, col_type = "c") %>%

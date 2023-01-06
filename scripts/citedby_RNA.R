@@ -7,7 +7,7 @@ library(googlesheets4)
 
 # Data locations ----------------------------------------------------------
 
-citedby_gs <- "1wG-d0wt-9YbwhQTaelxqRzbm4qnu11WDM2rv3THy5mY"
+citedby_gs <- "1soEnbGY2uVVDEC_xKOpjs9WQg-wQcLiXqmh_iJ-2qsM"
 
 graphics_dir <- here::here("graphics/citedby")
 
