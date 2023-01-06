@@ -108,7 +108,8 @@ ggsave(
   device = tools::file_ext(plot_all_file),
   width = 5,
   height = 3.75,
-  dpi = 600
+  dpi = 600,
+  bg = "white"
 )
 
 # Examine distinct IP download stats over the last yr ----------------------
@@ -162,5 +163,6 @@ ggsave(
   device = tools::file_ext(plot_1y_file),
   width = 4,
   height = 3,
-  dpi = 600
+  dpi = 600,
+  bg = "white"
 )

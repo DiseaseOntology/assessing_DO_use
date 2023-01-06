@@ -114,7 +114,8 @@ ggsave(
   device = tools::file_ext(comparison_plot),
   dpi = 600,
   width = 4,
-  height = 4
+  height = 4,
+  bg = "white"
 )
 
 # Details - Search Unique -------------------------------------------------
@@ -169,7 +170,8 @@ ggsave(
   device = tools::file_ext(comparison_plot),
   dpi = 600,
   width = 4,
-  height = 3
+  height = 3,
+  bg = "white"
 )
 
 

@@ -295,7 +295,8 @@ ggsave(
   plot = g_epmc,
   device = "png",
   width = 12,
-  dpi = 600
+  dpi = 600,
+  bg = "white"
 )
 
 ggsave(
@@ -304,21 +305,24 @@ ggsave(
   device = "png",
   width = 6,
   height = 3,
-  dpi = 600
+  dpi = 600,
+  bg = "white"
 )
 
 ggsave(
   filename = file.path(graphics_dir, "pmc_search_overlap.png"),
   plot = g_pmc,
   device = "png",
-  dpi = 600
+  dpi = 600,
+  bg = "white"
 )
 
 ggsave(
   filename = file.path(graphics_dir, "pm_search_overlap.png"),
   plot = g_pm,
   device = "png",
-  dpi = 600
+  dpi = 600,
+  bg = "white"
 )
 
 
@@ -414,14 +418,16 @@ ggsave(
   filename = file.path(graphics_dir, "search_src_overlap-venn.png"),
   plot = g_src_venn,
   device = "png",
-  dpi = 600
+  dpi = 600,
+  bg = "white"
 )
 
 ggsave(
   filename = file.path(graphics_dir, "search_src_overlap-upset.png"),
   plot = g_src_upset,
   device = "png",
-  dpi = 600
+  dpi = 600,
+  bg = "white"
 )
 
 
@@ -469,7 +475,8 @@ ggsave(
   device = "png",
   dpi = 600,
   width = 1.47,
-  height = 3.35
+  height = 3.35,
+  bg = "white"
 )
 # save only for legend (crop)
 ggsave(
@@ -479,7 +486,8 @@ ggsave(
   device = "png",
   dpi = 600,
   width = 3,
-  height = 3.35
+  height = 3.35,
+  bg = "white"
 )
 # save complete
 ggsave(
@@ -489,5 +497,6 @@ ggsave(
   device = "png",
   dpi = 600,
   width = 3.5,
-  height = 3.35
+  height = 3.35,
+  bg = "white"
 )

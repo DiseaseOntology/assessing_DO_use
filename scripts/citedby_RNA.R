@@ -76,7 +76,8 @@ ggsave(
   device = "png",
   dpi = 600,
   width = 4,
-  height = 3
+  height = 3,
+  bg = "white"
 )
 
 
@@ -101,7 +102,8 @@ ggsave(
   plot = g_rna_type,
   filename = file.path(graphics_dir, "RNA_pubs_over_time-by_type.png"),
   device = "png",
-  dpi = 600
+  dpi = 600,
+  bg = "white"
 )
 
 
@@ -120,5 +122,6 @@ ggsave(
   plot = g_use,
   filename = file.path(graphics_dir, "RNA_pubs_over_time-by_pub_type.png"),
   device = "png",
-  dpi = 600
+  dpi = 600,
+  bg = "white"
 )

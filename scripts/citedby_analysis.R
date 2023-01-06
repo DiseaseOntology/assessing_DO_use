@@ -61,7 +61,8 @@ ggsave(
   filename = file.path(graphics_dir, "DO_cited_by_count.png"),
   width = 5,
   height = 3.5,
-  dpi = 600
+  dpi = 600,
+  bg = "white"
 )
 
 
@@ -123,7 +124,8 @@ ggsave(
   filename = file.path(graphics_dir, "citedy_source_overlap-venn.png"),
   dpi = 600,
   width = 7,
-  height = 7
+  height = 7,
+  bg = "white"
 )
 
 

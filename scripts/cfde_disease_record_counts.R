@@ -109,5 +109,6 @@ ggsave(
   device = "png",
   dpi = 600,
   width = 4.5,
-  height = 3.5
+  height = 3.5,
+  bg = "white"
 )
