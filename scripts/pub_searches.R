@@ -252,6 +252,7 @@ plot_upset <- function(df, id_col, overlap_col, min_count = 0, ...) {
 epmc_plot_df <- epmc_df %>%
   dplyr::mutate(search_id = dplyr::recode(search_id, !!!search_terms))
 
+# full EPMC plot
 g_epmc <- plot_upset(
   epmc_plot_df,
   id,
@@ -260,6 +261,18 @@ g_epmc <- plot_upset(
   y = "Hits"
 )
 
+ggsave(
+  filename = file.path(graphics_dir, "epmc_search_overlap.png"),
+  plot = g_epmc,
+  device = "png",
+  width = 6.2,
+  height = 3.5,
+  scale = 2,
+  dpi = 600,
+  bg = "white"
+)
+
+# EMPC plot, searches with < 10 hits dropped
 g_epmc10 <- plot_upset(
   epmc_plot_df,
   id,
@@ -269,6 +282,18 @@ g_epmc10 <- plot_upset(
   y = "Hits"
 )
 
+ggsave(
+  filename = file.path(graphics_dir, "epmc_search_overlap-min10.png"),
+  plot = g_epmc10,
+  device = "png",
+  width = 6.2,
+  height = 3,
+  dpi = 600,
+  bg = "white"
+)
+
+
+# PMC plot
 g_pmc <- pmc_df %>%
   dplyr::filter(search_id != "do_wiki") %>%
   dplyr::mutate(search_id = dplyr::recode(search_id, !!!search_terms)) %>%
@@ -279,6 +304,16 @@ g_pmc <- pmc_df %>%
     y = "Hits"
   )
 
+ggsave(
+  filename = file.path(graphics_dir, "pmc_search_overlap.png"),
+  plot = g_pmc,
+  device = "png",
+  dpi = 600,
+  bg = "white"
+)
+
+
+# PubMed plot
 g_pm <- pm_df %>%
   dplyr::filter(!search_id %in% c("iri", "do_wiki")) %>%
   dplyr::mutate(search_id = dplyr::recode(search_id, !!!search_terms)) %>%
@@ -288,35 +323,6 @@ g_pm <- pm_df %>%
     x = "Search",
     y = "Hits"
   )
-
-
-# save plots
-ggsave(
-  filename = file.path(graphics_dir, "epmc_search_overlap.png"),
-  plot = g_epmc,
-  device = "png",
-  width = 12,
-  dpi = 600,
-  bg = "white"
-)
-
-ggsave(
-  filename = file.path(graphics_dir, "epmc_search_overlap-min10.png"),
-  plot = g_epmc10,
-  device = "png",
-  width = 6,
-  height = 3,
-  dpi = 600,
-  bg = "white"
-)
-
-ggsave(
-  filename = file.path(graphics_dir, "pmc_search_overlap.png"),
-  plot = g_pmc,
-  device = "png",
-  dpi = 600,
-  bg = "white"
-)
 
 ggsave(
   filename = file.path(graphics_dir, "pm_search_overlap.png"),
@@ -403,6 +409,15 @@ g_src_venn <- purrr::map(
   ) %>%
   ggvenn(fill_color = hues::iwanthue(3, random = TRUE))
 
+ggsave(
+  filename = file.path(graphics_dir, "search_src_overlap-venn.png"),
+  plot = g_src_venn,
+  device = "png",
+  dpi = 600,
+  bg = "white"
+)
+
+
 g_src_upset <- src_match %>%
   dplyr::mutate(
     src = dplyr::recode(
@@ -413,15 +428,6 @@ g_src_upset <- src_match %>%
     )
   ) %>%
   plot_upset(id_col = id, overlap_col = src, x = "Source", y = "Hits")
-
-
-ggsave(
-  filename = file.path(graphics_dir, "search_src_overlap-venn.png"),
-  plot = g_src_venn,
-  device = "png",
-  dpi = 600,
-  bg = "white"
-)
 
 ggsave(
   filename = file.path(graphics_dir, "search_src_overlap-upset.png"),
@@ -479,6 +485,8 @@ ggsave(
   height = 3.35,
   bg = "white"
 )
+
+
 # save only for legend (crop)
 ggsave(
   # may not like left position (also printed without guides adjustment)
@@ -490,6 +498,8 @@ ggsave(
   height = 3.35,
   bg = "white"
 )
+
+
 # save complete
 ggsave(
   # may not like left position (also printed without guides adjustment)
