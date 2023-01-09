@@ -446,6 +446,8 @@ ggsave(
   filename = file.path(graphics_dir, "search_src_overlap-venn.png"),
   plot = g_src_venn,
   device = "png",
+  width = 6,
+  height = 6,
   dpi = 600,
   bg = "white"
 )
