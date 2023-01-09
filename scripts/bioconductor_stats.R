@@ -37,21 +37,25 @@ if (!dir.exists(plot_dir)) {
 
 # Get & save stats of bioconductor pkgs using DO --------------------------
 
-do_bioc <- purrr::map(
-  as.character(yrs),
-  ~ DO.utils::get_bioc_pkg_stats(
-    pkg_nm,
-    pkg_type,
-    yr = .x,
-    delay_rng = 1:2
-  )
-) %>%
-  dplyr::bind_rows() %>%
-  dplyr::filter(Month != "all") %>%
-  dplyr::arrange(pkg, Year)
+if (!file.exists(stats_all_file)) {
+  do_bioc <- purrr::map(
+    as.character(yrs),
+    ~ DO.utils::get_bioc_pkg_stats(
+      pkg_nm,
+      pkg_type,
+      yr = .x,
+      delay_rng = 1:2
+    )
+  ) %>%
+    dplyr::bind_rows() %>%
+    dplyr::filter(Month != "all") %>%
+    dplyr::arrange(pkg, Year)
 
-# save stats info
-readr::write_csv(do_bioc, stats_all_file)
+  # save stats info
+  readr::write_csv(do_bioc, stats_all_file)
+} else {
+  do_bioc <- readr::read_csv(stats_all_file)
+}
 
 
 # Plot stats --------------------------------------------------------------
