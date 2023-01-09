@@ -306,13 +306,20 @@ g_epmc10 <- plot_upset(
   min_count = 10,
   x = "Search",
   y = "Hits"
-)
+) +
+  ggupset::theme_combmatrix(
+    combmatrix.panel.point.size = 2,
+    combmatrix.panel.line.size = 0.8,
+    combmatrix.label.text = element_text(size = 8),
+    combmatrix.label.extra_spacing = 1.5,
+    combmatrix.label.total_extra_spacing = unit(0, "pt")
+  )
 
 ggsave(
   filename = file.path(graphics_dir, "epmc_search_overlap-min10.png"),
   plot = g_epmc10,
   device = "png",
-  width = 6.2,
+  width = 6.6,
   height = 3,
   dpi = 600,
   bg = "white"
