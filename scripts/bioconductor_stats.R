@@ -61,13 +61,8 @@ if (!file.exists(stats_all_file)) {
 # Plot stats --------------------------------------------------------------
 
 do_bioc_tidy <- do_bioc %>%
-  # drop data from incomplete months (current month onward)
-  dplyr::filter(
-    !(
-      Year == lubridate::year(lubridate::today()) &
-        match(Month, month.abb) >= lubridate::month(lubridate::today())
-    )
-  ) %>%
+  # drop data from incomplete months (Nov & Dec 2022)
+  dplyr::filter(!(Year == 2022 & match(Month, month.abb) >= 11)) %>%
   dplyr::mutate(
     date = lubridate::ym(paste(Year, Month, sep = "-")),
   ) %>%
@@ -117,9 +112,8 @@ ggsave(
 )
 
 # Examine distinct IP download stats over the last yr ----------------------
-# NOTE: Does not include current month
 
-# limit to distinct IPs over last year
+# limit to distinct IPs over last year (Sep 2021-Oct 2022)
 do_bioc_ip_1y <- do_bioc_ip %>%
   dplyr::filter(
     date >= (max(date) - 340),
@@ -127,8 +121,7 @@ do_bioc_ip_1y <- do_bioc_ip %>%
   ) %>%
   dplyr::select(!metric)
 
-
-# save last yr (12 month) results
+# save results
 readr::write_csv(
   dplyr::rename(do_bioc_ip_1y, distinctIP_downloads = count),
   stats_1y_file
