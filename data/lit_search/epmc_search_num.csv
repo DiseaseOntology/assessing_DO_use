@@ -1,0 +1,15 @@
+search_num,search
+#1,"""disease ontology"""
+#2,"""disease ontology"" NOT IDO"
+#3,doid
+#4,"""human disease ontology"""
+#5,"""disease-ontology.org"""
+#6,bioportal.bioontology.org/ontologies/doid
+#7,purl.obolibrary.org/obo/doid
+#8,github.com/diseaseontology/humandiseaseontology
+#9,purl.obolibrary.org/obo/doid.owl
+#10,ebi.ac.uk/ols/ontologies/doid
+#11,sourceforge.net/p/diseaseontology
+#12,en.wikipedia.org/wiki/disease_ontology
+#13,do-wiki.nubic.northwestern.edu/do-wiki/index.php/main_page
+#14,ontobee.org/ontology/doid

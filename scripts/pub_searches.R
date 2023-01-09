@@ -248,29 +248,55 @@ plot_upset <- function(df, id_col, overlap_col, min_count = 0, ...) {
   g
 }
 
-# excluding results where actual search tokens were converted to non-DO identifiers
+# Searches are too long to display for full EPMC plot, number searches instead
+# and output csv of search with numbers to identify them
+search_num_rc <- c(
+  generic_name = '#1', lynn_custom = '#2', ns_id = '#3', full_name = '#4',
+  website = '#5', ncbo = '#6', iri_no_ext = '#7', github = '#8', iri = '#9',
+  embl_ols = '#10', sourceforge = '#11', wikipedia = '#12', do_wiki = '#13',
+  ontobee = '#14' # no hits
+)
+
+# also excluding results where actual search tokens were converted to non-DO
+# identifiers
 epmc_plot_df <- epmc_df %>%
-  dplyr::mutate(search_id = dplyr::recode(search_id, !!!search_terms))
+  dplyr::mutate(
+    search_num = dplyr::recode(search_id, !!!search_num_rc),
+    search_id = dplyr::recode(search_id, !!!search_terms)
+  )
 
 # full EPMC plot
 g_epmc <- plot_upset(
   epmc_plot_df,
   id,
-  search_id,
+  search_num,
   x = "Search",
   y = "Hits"
-)
+) +
+  ggupset::theme_combmatrix(
+    combmatrix.label.text = element_text(size = 8),
+    combmatrix.label.extra_spacing = 0,
+    combmatrix.label.total_extra_spacing = unit(0, "pt"),
+    combmatrix.panel.line.size = 1,
+    combmatrix.panel.point.size = 2.5
+  )
 
 ggsave(
   filename = file.path(graphics_dir, "epmc_search_overlap.png"),
   plot = g_epmc,
   device = "png",
-  width = 6.2,
+  width = 6.6,
   height = 3.5,
-  scale = 2,
   dpi = 600,
   bg = "white"
 )
+
+tibble::tibble(
+  search_num = search_num_rc,
+  search = dplyr::recode(names(search_num_rc), !!!search_terms)
+) %>%
+  readr::write_csv(file.path(data_dir, "epmc_search_num.csv"))
+
 
 # EMPC plot, searches with < 10 hits dropped
 g_epmc10 <- plot_upset(
