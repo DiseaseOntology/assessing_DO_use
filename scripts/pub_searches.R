@@ -240,6 +240,7 @@ plot_upset <- function(df, id_col, overlap_col, min_count = 0, ...) {
     dplyr::filter(n >= min_count)
 
   g <- ggplot(overlap_df, aes(x = {{ overlap_col }})) +
+    theme_minimal() +
     geom_bar() +
     scale_x_upset() +
     labs(...)
