@@ -499,7 +499,7 @@ g_total <- ggplot(all_search, aes(x = src)) +
   ) +
   scale_fill_manual(
     name = "Search",
-    values = c("#e8cb3e", "#9e79f3", "#f54b65")
+    values = c("grey20", "grey50", "grey80")
   ) +
   geom_text(aes(x = src, y = 350, label = src), angle = 90, hjust = 0) +
   labs(x = "Database", y = "Search Hits") +
