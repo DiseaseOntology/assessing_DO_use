@@ -6,7 +6,7 @@
 #   Y-axis: “Sample Count”
 #   X-axis: “CF Program”
 #   Group by: “Disease”
-# Save to "data/CFDE_data-program_sample_disease.csv" and run this script.
+# Save to "data/cfde/CFDE_data-program_sample_disease.csv" and run this script.
 
 library(here)
 library(tidyverse)
