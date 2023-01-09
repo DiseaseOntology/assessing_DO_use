@@ -26,7 +26,10 @@ if (!dir.exists(data_dir)) {
 
 
 # Download & Load "All disease annotations" .tsv.gz -------------------
-disease_tsv_file <- DO.utils::download_alliance_tsv(dest_dir = data_dir)
+disease_tsv_file <- file.path(data_dir, "DISEASE-ALLIANCE_COMBINED.tsv.gz")
+if (!file.exists(disease_tsv_file)) {
+  DO.utils::download_alliance_tsv(dest_dir = data_dir)
+}
 disease_df <- DO.utils::read_alliance(disease_tsv_file)
 
 
