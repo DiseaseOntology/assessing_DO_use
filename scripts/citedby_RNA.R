@@ -68,14 +68,15 @@ rna <- citedby_df %>%
 # simple plot
 g_rna <- ggplot(rna) +
   geom_bar(aes(x = pub_yr), width = 0.8) +
-  labs(x = "Year", y = "Publications")
+  labs(x = "Year", y = "Publications") +
+  theme_minimal()
 
 ggsave(
   plot = g_rna,
   filename = file.path(graphics_dir, "RNA_pubs_over_time.png"),
   device = "png",
   dpi = 600,
-  width = 4,
+  width = 3.2,
   height = 3,
   bg = "white"
 )
