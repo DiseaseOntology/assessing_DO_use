@@ -226,6 +226,10 @@ readr::write_csv(actual_search, file.path(data_dir, "actual_search_terms.csv"))
 # Identify overlap in searches --------------------------------------------
 plot_upset <- function(df, id_col, overlap_col, min_count = 0, ...) {
   overlap_df <- df %>%
+    # drop category if < min_count
+    dplyr::add_count({{ overlap_col }}, name = "n") %>%
+    dplyr::filter(n >= min_count) %>%
+    # format for ggupset
     dplyr::select({{ overlap_col }}, {{ id_col }}) %>%
     dplyr::group_by({{ id_col }}) %>%
     dplyr::summarize(
@@ -234,10 +238,6 @@ plot_upset <- function(df, id_col, overlap_col, min_count = 0, ...) {
     ) %>%
     dplyr::ungroup() %>%
     dplyr::add_count(str, name = "n")
-
-  # drop intersections if < 10
-  overlap_df <- overlap_df %>%
-    dplyr::filter(n >= min_count)
 
   g <- ggplot(overlap_df, aes(x = {{ overlap_col }})) +
     theme_minimal() +
