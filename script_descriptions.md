@@ -158,3 +158,22 @@ Three additional scripts in this repository were used to evaluate the impact of 
   - data/cfde/CFDE_data-program_sample_disease.csv
   - data/cfde/cfde_disease_counts.csv
   - graphics/cfde_disease.png
+
+4. poster_figures.R
+  - Input:
+    1. data/citedby/DO_citedby-2023_Apr.csv: update of "cited by" results collected through the beginning of April 2023 for new figure of publications citing the DO.
+    2. data/citedby/analysis/citedby_source_count.csv
+    3. data/lit_search/src_comparison.csv
+    4. data/poster/research_area.csv: added groupings to file with same data (data/citedby/analysis/research_area_count.csv) more succinctly show research areas impacted by DO.
+    5. data/poster/status_use.csv: same changes as 4.
+    6. data/poster/tool_role.csv: same changes as 4.
+    7. data/citedby/analysis/review_time_summary.csv
+  - Output:
+    1. graphics/poster/citedby.svg
+    2. graphics/poster/record_collection.svg
+    3. graphics/poster/record_pie.svg
+    4. graphics/poster/record_total.svg
+    5. graphics/poster/research_area-mod.svg
+    6. graphics/poster/research_area.svg
+    7. graphics/poster/status_use.svg
+    8. graphics/poster/tool_role.svg

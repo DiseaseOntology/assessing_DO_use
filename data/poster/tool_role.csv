@@ -1,0 +1,23 @@
+tool_role,n,tool_role_orig,n_orig,group
+analysis,18,AI learner,1,prediction
+curation,2,analysis,9,analysis
+data provider,25,causal analysis,1,analysis
+literature mining,6,clustering,1,analysis
+prediction,19,curation > computer-assisted,2,curation
+visualization,9,data,10,data provider
+,,data > aggregation,2,data provider
+,,data > harmonization,5,data provider
+,,data > quality rating,1,data provider
+,,de novo network construction,2,data provider
+,,decision support system,1,prediction
+,,enrichment analysis,6,analysis
+,,literature discovery,2,literature mining
+,,model organism database,3,data provider
+,,NA,5,
+,,NLP,1,literature mining
+,,NLP > NER,3,literature mining
+,,phenotypic screening,1,analysis
+,,prediction,17,prediction
+,,present information,2,data provider
+,,visualization,7,visualization
+,,visualization > network,2,visualization

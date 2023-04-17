@@ -1,0 +1,75 @@
+research_area,n,area,research_area_orig,n_orig,ra_group
+environmental factors,8,etiology,flies,1,alternate species
+epigenetics,2,etiology,model organisms,1,alternate species
+genetics,14,etiology,multi-species,1,alternate species
+host factors,17,etiology,worms,1,alternate species
+alternate species,6,research,yeast,1,alternate species
+data science,9,research,zebrafish,1,alternate species
+pharmacology,12,research,biomedical literature mining,4,data science
+,,,high-dimensional data science,1,data science
+,,,knowledge graphs,2,data science
+,,,medical terminology,1,data science
+,,,metadata,1,data science
+,,,national research data infrastructure,1,data science
+,,,NER,1,data science
+,,,NLP,1,data science
+,,,ontology > relationships,1,data science
+,,,bacteria,1,environment
+,,,chemigenomics,1,environment
+,,,exposure,2,environment
+,,,food,1,environment
+,,,fumarate,1,environment
+,,,gluten,1,environment
+,,,toxicogenomics,1,environment
+,,,urban populations,1,environment
+,,,enhancers,1,epigenetics
+,,,R-loops,1,epigenetics
+,,,association > disease-genetic,26,genetics
+,,,biomarkers,2,genetics
+,,,circRNA,2,genetics
+,,,DNA structure,1,genetics
+,,,genetic drivers,1,genetics
+,,,genomics,2,genetics
+,,,lncRNA,4,genetics
+,,,miRNA,3,genetics
+,,,omics,1,genetics
+,,,plasmids,1,genetics
+,,,single-cell transcriptomics,1,genetics
+,,,transcriptomics,1,genetics
+,,,variant > annotation,1,genetics
+,,,variant > interpretation,1,genetics
+,,,variant > synonymous single nucleotide,1,genetics
+,,,amyloids,1,host factors
+,,,anatomical structure,1,host factors
+,,,association > disease-disease,1,host factors
+,,,association > disease-metabolite,1,host factors
+,,,association > disease-protein,2,host factors
+,,,biology,1,host factors
+,,,brain,3,host factors
+,,,comorbidities,1,host factors
+,,,health outcomes,1,host factors
+,,,human disease,2,host factors
+,,,inflammation,1,host factors
+,,,liquid-liquid phase separation,1,host factors
+,,,molecular interactions,1,host factors
+,,,neurons,1,host factors
+,,,patient data,1,host factors
+,,,protein > pathogenic,1,host factors
+,,,protein > protein interactions,2,host factors
+,,,Radiology,1,host factors
+,,,rare disease,1,host factors
+,,,host factors differences,1,host factors
+,,,survival analysis,1,host factors
+,,,association > drug-gene,1,pharmacology
+,,,dietary supplement > herbal,2,pharmacology
+,,,dietary supplement > repurposing,1,pharmacology
+,,,drug > development,1,pharmacology
+,,,drug > discovery,1,pharmacology
+,,,drug > indications,1,pharmacology
+,,,drug > repurposing,3,pharmacology
+,,,drug > targets,1,pharmacology
+,,,PBPK modeling,1,pharmacology
+,,,pharmacology,1,pharmacology
+,,,plants,1,pharmacology
+,,,systems pharmacology,1,pharmacology
+,,,NA,2,
