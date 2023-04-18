@@ -2,7 +2,11 @@
 
 [![DOI](https://zenodo.org/badge/523817284.svg)](https://zenodo.org/badge/latestdoi/523817284)
 
-The code, data, and figures used or produced to assess use of the Human Disease Ontology (DO; [disease-ontology.org](https://disease-ontology.org/)) as part of the case study for the **resource use assessment workflow**, applicable to any public resource seeking to determine its use, as described in "Assessing Resource Use: A Case Study with the Human Disease Ontology" soon to be published in the journal DATABASE. This repository and the corresponding [DO_uses-published_2022](https://docs.google.com/spreadsheets/d/1soEnbGY2uVVDEC_xKOpjs9WQg-wQcLiXqmh_iJ-2qsM/edit?usp=share_link) Google Sheet used for curation should serve as a good example for any public resource wishing to implement this workflow.
+This repository and the corresponding [DO_uses-published_2022](https://docs.google.com/spreadsheets/d/1soEnbGY2uVVDEC_xKOpjs9WQg-wQcLiXqmh_iJ-2qsM/edit?usp=share_link) Google Sheet used for curation serve as an example implementing the **public resource use assessment workflow** described in: 
+
+> J. Allen Baron, Lynn M Schriml, _Assessing resource use: a case study with the Human Disease Ontology_, Database, Volume 2023, 2023, baad007. PMID:36856688, https://doi.org/10.1093/database/baad007.
+
+All the code, data, and figures for the case study with the Human Disease Ontology (DO; [disease-ontology.org](https://disease-ontology.org/)) are included.
 
 
 # Reproducibility
@@ -16,4 +20,4 @@ The [DO_uses-published_2022](https://docs.google.com/spreadsheets/d/1soEnbGY2uVV
 
 # Code Details
 
-Details describing the purpose, input and output of each script in this repository can be found in the [script_descriptions.md](scripts_descriptions.md) file.
+Details describing the purpose, input and output of each script in this repository can be found in the [script_descriptions.md](./scripts_descriptions.md) file.

@@ -2,10 +2,9 @@
 
 The scripts below were used in the case study to assess use of the Human Disease Ontology in the publication:
 
-> Assessing Resource Use: A Case Study with the Human Disease Ontology. DATABASE.
-Accepted, awaiting publication.
+> J. Allen Baron, Lynn M Schriml, _Assessing resource use: a case study with the Human Disease Ontology_, Database, Volume 2023, 2023, baad007. PMID:36856688, https://doi.org/10.1093/database/baad007.
 
-These scripts are found in the `scripts/` directory and listed below under the section of the case study they apply to, with a brief description. Later in this document a description of what each script accomplished and its file inputs and outputs are given.
+Scripts are found in the `scripts/` directory and listed below under the section of the case study they apply to, with a brief description. Later in this document a description of what each script accomplished and its file inputs and outputs are given.
 
 
 ## Obtain Use Records
